@@ -1,0 +1,37 @@
+namespace W3Front
+{
+    struct ContentMeta
+    {
+        const char *content;
+        const char *type;
+    };
+
+    struct PathContentPair
+    {
+        const char *path;
+        ContentMeta file;
+    };
+
+    class ContentFiles
+    {
+    private:
+        static const ContentMeta INDEX;
+
+        static const ContentMeta &GetIndex() { return INDEX; }
+
+    public:
+        static const PathContentPair *GetPathContentDictionary()
+        {
+            static const PathContentPair pathContentdictionary[] = {
+                {"/", GetIndex()},
+            };
+            return pathContentdictionary;
+        }
+
+        static const int pathContentDictionarySize = 1;
+    };
+
+    const ContentMeta ContentFiles::INDEX = {
+        "<%- htmlFile.replace(/\"/g, '\'') %>",
+        "text/html"};
+}

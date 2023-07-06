@@ -1,0 +1,51 @@
+namespace W3Front
+{
+    struct ContentMeta
+    {
+        const char *content;
+        const char *type;
+    };
+
+    struct PathContentPair
+    {
+        const char *path;
+        ContentMeta file;
+    };
+
+    class ContentFiles
+    {
+    private:
+        static const ContentMeta INDEX;
+        static const ContentMeta JSFILE;
+        static const ContentMeta CSSFILE;
+
+        static const ContentMeta &GetIndex() { return INDEX; }
+        static const ContentMeta &GetJSFile() { return JSFILE; }
+        static const ContentMeta &GetCSSFile() { return CSSFILE; }
+
+    public:
+        static const PathContentPair *GetPathContentDictionary()
+        {
+            static const PathContentPair pathContentdictionary[] = {
+                {"/", GetIndex()},
+                {"/js/main.js", GetJSFile()},
+                {"/css/style.css", GetCSSFile()},
+            };
+            return pathContentdictionary;
+        }
+
+        static const int pathContentDictionarySize = 3;
+    };
+
+    const ContentMeta ContentFiles::INDEX = {
+        "<%- htmlFile.replace(/\"/g, '\'') %>",
+        "text/html"};
+
+    const ContentMeta ContentFiles::JSFILE = {
+        "<%- jsFile.replace(/\"/g, '\'') %>",
+        "text/javascript"};
+
+    const ContentMeta ContentFiles::CSSFILE = {
+        "<%- cssFile.replace(/\"/g, '\'') %>",
+        "text/css"};
+}

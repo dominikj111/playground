@@ -9,6 +9,9 @@ edition = "2021"
 name = "template-bin-name"
 path = "src/main.rs"
 
+[dependencies]
+lazy_static = "1.4.0"
+
 [package.metadata.clippy]
 # List of lints to allow, in addition to those allowed by default
 # (optional)

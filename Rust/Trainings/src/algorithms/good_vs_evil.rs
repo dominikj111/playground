@@ -46,15 +46,10 @@
  *
  */
 
-use lazy_static::lazy_static;
-
-lazy_static! {
-	// Hobbits, Men, Elves, Dwarves, Eagles, Wizards
-	static ref GOOD_BOYS: [u8; 6] = [1, 2, 3, 3, 4, 10];
-
-	// Orcs, Men, Wargs, Goblins, Uruk Hai, Trolls, Wizards
-	static ref BAD_BOYS: [u8; 7] = [1, 2, 2, 2, 3, 5, 10];
-}
+// Hobbits, Men, Elves, Dwarves, Eagles, Wizards
+const GOOD_BOYS: [u8; 6] = [1, 2, 3, 3, 4, 10];
+// Orcs, Men, Wargs, Goblins, Uruk Hai, Trolls, Wizards
+const BAD_BOYS: [u8; 7] = [1, 2, 2, 2, 3, 5, 10];
 
 pub fn good_vs_evil(good: &str, evil: &str) -> String {
 

@@ -1,3 +1,4 @@
+
 /**
  * Middle Earth is about to go to war. The forces of good will have many battles with the forces of evil.
  * Different races will certainly be involved. Each race has a certain worth when battling against others.
@@ -46,23 +47,42 @@
  *
  */
 
-// Hobbits, Men, Elves, Dwarves, Eagles, Wizards
-const GOOD_BOYS: [u8; 6] = [1, 2, 3, 3, 4, 10];
-// Orcs, Men, Wargs, Goblins, Uruk Hai, Trolls, Wizards
-const BAD_BOYS: [u8; 7] = [1, 2, 2, 2, 3, 5, 10];
+const GOOD_BOYS: [u8; 6] = [
+	1, // Hobbits
+	2, // Men
+	3, // Elves
+	3, // Dwarves
+	4, // Eagles
+	10, // Wizards
+];
+
+const BAD_BOYS: [u8; 7] = [
+	1, // Orcs
+	2, // Men
+	2, // Wargs
+	2, // Goblins
+	3, // Uruk Hai
+	5, // Trolls
+	10, // Wizards
+];
 
 pub fn good_vs_evil(good: &str, evil: &str) -> String {
+	let mut good_sum = 0;
+	let mut evil_sum = 0;
 
-    let mut good_sum = 0;
-    let mut evil_sum = 0;
+	for (index, item) in good
+		.split_whitespace()
+		.map(|x| x.parse::<u8>().unwrap())
+		.enumerate() {
+		good_sum += (GOOD_BOYS[index] as u32) * (item as u32);
+	}
 
-    for (index, item) in good.split_whitespace().map(|x| x.parse::<u8>().unwrap()).enumerate() {
-        good_sum += GOOD_BOYS[index] as u32 * item as u32;
-    }
-
-    for (index, item) in evil.split_whitespace().map(|x| x.parse::<u8>().unwrap()).enumerate() {
-        evil_sum += BAD_BOYS[index] as u32 * item as u32;
-    }
+	for (index, item) in evil
+		.split_whitespace()
+		.map(|x| x.parse::<u8>().unwrap())
+		.enumerate() {
+		evil_sum += (BAD_BOYS[index] as u32) * (item as u32);
+	}
 
 	if good_sum > evil_sum {
 		return String::from("Battle Result: Good triumphs over Evil");

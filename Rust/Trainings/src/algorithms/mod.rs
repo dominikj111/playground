@@ -9,3 +9,6 @@ pub use break_camelcase::break_camelcase;
 
 pub mod good_vs_evil;
 pub use good_vs_evil::good_vs_evil;
+
+pub mod two_sum;
+pub use two_sum::two_sum;

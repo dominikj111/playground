@@ -12,3 +12,8 @@ pub use good_vs_evil::good_vs_evil;
 
 pub mod two_sum;
 pub use two_sum::two_sum;
+
+pub mod are_two_arrays_same;
+pub fn are_two_arrays_same(a: Vec<i64>, b: Vec<i64>) -> bool {
+    return are_two_arrays_same::comp(a, b);
+}

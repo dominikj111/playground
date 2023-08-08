@@ -5,7 +5,11 @@ fn main() {
 	println!("{}", algorithms::narcissistic(153));
 	println!("{}", algorithms::duplicate_encode("recede"));
 	println!("{}", algorithms::break_camelcase("ahojJakSeVede!"));
-	
+
+	let a1 = vec![121, 144, 19, 161, 19, 144, 19, 11];
+	let a2 = vec![11 * 11, 121 * 121, 144 * 144, 19 * 19, 161 * 161, 19 * 19, 144 * 144, 19 * 19];
+	println!("Arrays are same: {}", if algorithms::are_two_arrays_same(a1, a2) { "corrent" } else { "incorrent" });
+
 	convert_samples();
 }
 

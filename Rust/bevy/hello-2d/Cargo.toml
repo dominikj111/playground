@@ -9,9 +9,6 @@ edition = "2021"
 name = "bevy-hello-bin"
 path = "src/main.rs"
 
-[workspace]
-resolver = "2" # Important! wgpu/Bevy needs this!
-
 # Enable a small amount of optimization in debug mode
 [profile.dev]
 opt-level = 1

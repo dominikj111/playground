@@ -24,11 +24,6 @@ struct Fibonacci {
 
 impl Fibonacci {
     fn get_or_compute(&mut self, index: usize) -> usize {
-        if self.values.is_empty() {
-            self.values.push(0);
-            self.values.push(1);
-        }
-
         while self.values.len() - 1 < index {
             self.values
                 .push(self.values[self.values.len() - 1] + self.values[self.values.len() - 2]);
@@ -46,7 +41,7 @@ static INIT: Once = Once::new();
 fn fib_get(index: usize) -> usize {
     unsafe {
         INIT.call_once(|| {
-            let fibonacci = Box::new(Mutex::new(Fibonacci { values: vec![] }));
+            let fibonacci = Box::new(Mutex::new(Fibonacci { values: vec![0, 1] }));
             FIBONACCI_PTR = Box::into_raw(fibonacci);
         });
         (*FIBONACCI_PTR).lock().unwrap().get_or_compute(index)

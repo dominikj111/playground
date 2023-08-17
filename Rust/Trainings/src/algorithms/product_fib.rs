@@ -23,7 +23,7 @@ struct Fibonacci {
 }
 
 impl Fibonacci {
-    fn get(&mut self, index: usize) -> usize {
+    fn get_or_compute(&mut self, index: usize) -> usize {
         if self.values.is_empty() {
             self.values.push(0);
             self.values.push(1);
@@ -38,47 +38,19 @@ impl Fibonacci {
     }
 }
 
-/*
-
-NOTE: this code is correct but fails time to time when testing, that is because tests are multithreaded
-
-static mut FIBONACCI: Fibonacci = Fibonacci {
-    values: vec![],
-};
-
-pub fn product_fib(prod: u64) -> (u64, u64, bool) {
-    let mut fibonacci_pointer: usize = 0;
-
-    unsafe {
-        loop {
-            let (f1, _) = FIBONACCI.get(fibonacci_pointer);
-            let (f2, _) = FIBONACCI.get(fibonacci_pointer + 1);
-            let f1f2 = f1 as u64 * f2 as u64;
-
-            if f1f2 == prod {
-                return (f1 as u64, f2 as u64, true);
-            }
-
-            if f1f2 > prod {
-                return (f1 as u64, f2 as u64, false);
-            }
-
-            fibonacci_pointer += 1;
-        }
-    }
-}
-*/
-
 use std::sync::{Mutex, Once};
 
-static mut FIBONACCI: Option<Mutex<Fibonacci>> = None;
+static mut FIBONACCI_PTR: *const Mutex<Fibonacci> = std::ptr::null();
 static INIT: Once = Once::new();
 
 fn fib_get(index: usize) -> usize {
-    INIT.call_once(|| unsafe {
-        FIBONACCI = Some(Mutex::new(Fibonacci { values: vec![] }));
-    });
-    unsafe { FIBONACCI.as_mut().unwrap().get_mut().unwrap().get(index) }
+    unsafe {
+        INIT.call_once(|| {
+            let fibonacci = Box::new(Mutex::new(Fibonacci { values: vec![] }));
+            FIBONACCI_PTR = Box::into_raw(fibonacci);
+        });
+        (*FIBONACCI_PTR).lock().unwrap().get_or_compute(index)
+    }
 }
 
 pub fn product_fib(prod: u64) -> (u64, u64, bool) {
@@ -101,27 +73,32 @@ pub fn product_fib(prod: u64) -> (u64, u64, bool) {
     }
 }
 
-#[test]
-fn fibonacci_struct_api() {
-    assert_eq!(fib_get(0), 0);
-    assert_eq!(fib_get(1), 1);
-    assert_eq!(fib_get(2), 1);
-    assert_eq!(fib_get(3), 2);
-    assert_eq!(fib_get(4), 3);
-    assert_eq!(fib_get(5), 5);
-    assert_eq!(fib_get(6), 8);
-    assert_eq!(fib_get(7), 13);
-    assert_eq!(fib_get(19), 4181);
-    assert_eq!(fib_get(15), 610);
-    assert_eq!(fib_get(11), 89);
-}
+#[cfg(test)]
+mod tests {
+    use super::{fib_get, product_fib};
 
-#[test]
-fn basics_product_fib() {
-    fn dotest(prod: u64, exp: (u64, u64, bool)) -> () {
-        assert_eq!(product_fib(prod), exp)
+    #[test]
+    fn fibonacci_struct_api() {
+        assert_eq!(fib_get(0), 0);
+        assert_eq!(fib_get(1), 1);
+        assert_eq!(fib_get(2), 1);
+        assert_eq!(fib_get(3), 2);
+        assert_eq!(fib_get(4), 3);
+        assert_eq!(fib_get(5), 5);
+        assert_eq!(fib_get(6), 8);
+        assert_eq!(fib_get(7), 13);
+        assert_eq!(fib_get(19), 4181);
+        assert_eq!(fib_get(15), 610);
+        assert_eq!(fib_get(11), 89);
     }
 
-    dotest(4895, (55, 89, true));
-    dotest(5895, (89, 144, false));
+    #[test]
+    fn basics_product_fib() {
+        fn dotest(prod: u64, exp: (u64, u64, bool)) -> () {
+            assert_eq!(product_fib(prod), exp)
+        }
+
+        dotest(4895, (55, 89, true));
+        dotest(5895, (89, 144, false));
+    }
 }

@@ -13,7 +13,7 @@ help:
 	@echo "  outdated: will check for outdated dependencies"
 	@echo "  doc: will generate the documentation"
 	@echo "  lint: will run clippy"
-	@echo "  format: will run prettier with write option (required: 'npm install --global prettier-plugin-rust prettier')"
+	@echo "  format: will run cargo fmt"
 
 build-all: target/debug/myproject
 
@@ -51,4 +51,4 @@ lint:
 	cargo clippy
 
 format:
-	prettier --write **/*.rs
+	cargo fmt

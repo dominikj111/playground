@@ -13,41 +13,44 @@
  */
 
 pub fn narcissistic(num: u64) -> bool {
-	// let digits: Vec<u8> = num
-	// 	.to_string()
-	// 	.chars()
-	// 	.map(|c| c.to_digit(10).unwrap() as u8)
-	// 	.collect();
+    // let digits: Vec<u8> = num
+    // 	.to_string()
+    // 	.chars()
+    // 	.map(|c| c.to_digit(10).unwrap() as u8)
+    // 	.collect();
 
-	// let exponent = digits.len() as u32;
-	// let maybe_narcissistic = digits.iter().fold(0, |acc, &x| acc + (x as u128).pow(exponent) as u64);
+    // let exponent = digits.len() as u32;
+    // let maybe_narcissistic = digits.iter().fold(0, |acc, &x| acc + (x as u128).pow(exponent) as u64);
 
-	// num == maybe_narcissistic
+    // num == maybe_narcissistic
 
-	num ==
-		num
-			.to_string()
-			.chars()
-			.map(|x| x.to_digit(10).unwrap() as u64)
-			.map(|x| x.pow(num.to_string().len() as u32))
-			.sum::<u64>()
+    num == num
+        .to_string()
+        .chars()
+        .map(|x| x.to_digit(10).unwrap() as u64)
+        .map(|x| x.pow(num.to_string().len() as u32))
+        .sum::<u64>()
 }
 
 #[cfg(test)]
 mod tests {
-	use super::*;
+    use super::*;
 
-	fn dotest(input: u64, expected: bool) {
-		let actual = narcissistic(input);
-		assert_eq!(actual, expected, "\nIncorrect answer for n={}\nExpected: {expected}\nActual: {actual}", input)
-	}
+    fn dotest(input: u64, expected: bool) {
+        let actual = narcissistic(input);
+        assert_eq!(
+            actual, expected,
+            "\nIncorrect answer for n={}\nExpected: {expected}\nActual: {actual}",
+            input
+        )
+    }
 
-	#[test]
-	fn basic_tests() {
-		dotest(7, true);
-		dotest(371, true);
-		dotest(122, false);
-		dotest(4887, false);
-		dotest(1000000000006, false);
-	}
+    #[test]
+    fn basic_tests() {
+        dotest(7, true);
+        dotest(371, true);
+        dotest(122, false);
+        dotest(4887, false);
+        dotest(1000000000006, false);
+    }
 }

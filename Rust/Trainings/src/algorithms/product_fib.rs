@@ -17,9 +17,11 @@
  * should return (34, 55, false), since F(8) = 21, F(9) = 34, F(10) = 55 and 21 * 34 < 800 < 34 * 55
  *
  */
+use std::sync::atomic::AtomicUsize;
+use std::sync::atomic::Ordering;
 
 struct Fibonacci {
-    values: Vec<usize>,
+    values: Vec<AtomicUsize>,
 }
 
 impl Fibonacci {
@@ -29,16 +31,18 @@ impl Fibonacci {
 
     fn get_or_compute(&mut self, index: usize) -> usize {
         if self.values.is_empty() {
-            self.values.push(0);
-            self.values.push(1);
+            self.values.push(AtomicUsize::new(0));
+            self.values.push(AtomicUsize::new(1));
         }
 
         while self.values.len() - 1 < index {
-            self.values
-                .push(self.values[self.values.len() - 1] + self.values[self.values.len() - 2]);
+            self.values.push(AtomicUsize::new(
+                self.values[self.values.len() - 1].load(Ordering::Relaxed)
+                    + self.values[self.values.len() - 2].load(Ordering::Relaxed),
+            ));
         }
 
-        self.values[index]
+        self.values[index].load(Ordering::Relaxed)
     }
 }
 

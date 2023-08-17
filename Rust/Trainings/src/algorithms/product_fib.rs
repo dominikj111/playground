@@ -23,7 +23,16 @@ struct Fibonacci {
 }
 
 impl Fibonacci {
+    const fn new() -> Self {
+        Self { values: Vec::new() }
+    }
+
     fn get_or_compute(&mut self, index: usize) -> usize {
+        if self.values.is_empty() {
+            self.values.push(0);
+            self.values.push(1);
+        }
+
         while self.values.len() - 1 < index {
             self.values
                 .push(self.values[self.values.len() - 1] + self.values[self.values.len() - 2]);
@@ -33,19 +42,12 @@ impl Fibonacci {
     }
 }
 
-use std::sync::{Mutex, Once};
+use std::sync::Mutex;
 
-static mut FIBONACCI_PTR: *const Mutex<Fibonacci> = std::ptr::null();
-static INIT: Once = Once::new();
+static FIBONACCI: Mutex<Fibonacci> = Mutex::new(Fibonacci::new());
 
 fn fib_get(index: usize) -> usize {
-    unsafe {
-        INIT.call_once(|| {
-            let fibonacci = Box::new(Mutex::new(Fibonacci { values: vec![0, 1] }));
-            FIBONACCI_PTR = Box::into_raw(fibonacci);
-        });
-        (*FIBONACCI_PTR).lock().unwrap().get_or_compute(index)
-    }
+    FIBONACCI.lock().unwrap().get_or_compute(index)
 }
 
 pub fn product_fib(prod: u64) -> (u64, u64, bool) {
@@ -89,6 +91,7 @@ mod tests {
 
     #[test]
     fn basics_product_fib() {
+        #[track_caller]
         fn dotest(prod: u64, exp: (u64, u64, bool)) -> () {
             assert_eq!(product_fib(prod), exp)
         }

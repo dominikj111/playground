@@ -49,7 +49,7 @@ pub fn comp(a: Vec<i64>, b: Vec<i64>) -> bool {
         b_processed_indexes.push(b_square_index);
     }
 
-    return b_processed_indexes.len() == b.len();
+    b_processed_indexes.len() == b.len()
 
     // NOTE: not my clever solution
     // let mut a1 = a.iter().map(|&x| x * x).collect::<Vec<_>>();

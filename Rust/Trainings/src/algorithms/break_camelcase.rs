@@ -18,7 +18,7 @@ pub fn break_camelcase(words: &str) -> String {
         }
     }
 
-    return new_string;
+    new_string
 }
 
 #[cfg(test)]

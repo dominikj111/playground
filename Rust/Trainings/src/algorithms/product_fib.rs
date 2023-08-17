@@ -24,7 +24,7 @@ struct Fibonacci {
 
 impl Fibonacci {
     fn get(&mut self, index: usize) -> usize {
-        if self.values.len() == 0 {
+        if self.values.is_empty() {
             self.values.push(0);
             self.values.push(1);
         }
@@ -78,7 +78,7 @@ fn fib_get(index: usize) -> usize {
     INIT.call_once(|| unsafe {
         FIBONACCI = Some(Mutex::new(Fibonacci { values: vec![] }));
     });
-    unsafe { FIBONACCI.as_mut().unwrap().lock().unwrap().get(index) }
+    unsafe { FIBONACCI.as_mut().unwrap().get_mut().unwrap().get(index) }
 }
 
 pub fn product_fib(prod: u64) -> (u64, u64, bool) {

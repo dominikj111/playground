@@ -17,6 +17,9 @@
  * should return (34, 55, false), since F(8) = 21, F(9) = 34, F(10) = 55 and 21 * 34 < 800 < 34 * 55
  *
  */
+
+/* NOTE: Fibonacci structure which supports multiple threads access
+
 use std::sync::atomic::AtomicUsize;
 use std::sync::atomic::Ordering;
 
@@ -52,6 +55,40 @@ static FIBONACCI: Mutex<Fibonacci> = Mutex::new(Fibonacci::new());
 
 fn fib_get(index: usize) -> usize {
     FIBONACCI.lock().unwrap().get_or_compute(index)
+}
+*/
+
+/* NOTE: Fibonacci structure which supports multiple threads access by using pre-computed all fibonacci numbers at compile-time
+    The overhead is just an additional 1KB of "code".
+*/
+struct Fibonacci {
+    values: [usize; 128],
+}
+
+impl Fibonacci {
+    const fn new() -> Self {
+        let mut length = 2;
+        let mut values = [0usize; 128];
+
+        values[1] = 1;
+
+        while let Some(sum) = values[length - 2].checked_add(values[length - 1]) {
+            values[length] = sum;
+            length += 1;
+        }
+
+        Self { values }
+    }
+
+    fn get_or_compute(&self, index: usize) -> usize {
+        self.values[index]
+    }
+}
+
+static FIBONACCI: Fibonacci = Fibonacci::new();
+
+fn fib_get(index: usize) -> usize {
+    FIBONACCI.get_or_compute(index)
 }
 
 pub fn product_fib(prod: u64) -> (u64, u64, bool) {

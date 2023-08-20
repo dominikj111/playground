@@ -1,6 +1,25 @@
 pub mod algorithms;
 
 fn main() {
+    let array: &[char] = &['H', 'e', 'l', 'l', 'o'];
+    let joined_string: String = array.iter().collect();
+    println!("Joined string: {}", joined_string);
+
+    let mut slice = vec!['r', 'u', 's', 't', 'd'];
+
+    if slice.len() % 2 != 0 {
+        slice.push('_');
+    }
+
+    let iter = slice
+        .windows(2)
+        .step_by(2)
+        .map(|pair: &[char]| pair.iter().collect::<String>());
+
+    for pair in iter {
+        println!("{:?}", pair);
+    }
+
     println!("Hello World!");
 
     println!("narcissistic: {}", algorithms::narcissistic(153));

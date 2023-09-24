@@ -1,0 +1,16 @@
+Cargo.lock
+
+!target/
+target/*
+
+!target/criterion/
+target/criterion/*
+
+!target/criterion/ai_version/
+target/criterion/ai_version/*
+!target/criterion/my_version/
+target/criterion/my_version/*
+
+!target/criterion/ai_version/report/
+!target/criterion/my_version/report/
+

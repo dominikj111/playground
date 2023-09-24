@@ -20,3 +20,6 @@ pub mod are_two_arrays_same;
 pub fn are_two_arrays_same(a: Vec<i64>, b: Vec<i64>) -> bool {
     are_two_arrays_same::comp(a, b)
 }
+
+pub mod one_hundred_days_challenge;
+pub use one_hundred_days_challenge::two_sum_100;

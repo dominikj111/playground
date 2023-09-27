@@ -41,7 +41,7 @@ pub fn two_sum_100(numbers: &[isize], target: &isize) -> Option<(usize, usize)> 
  * Output: [[1,0,1],[0,0,0],[1,0,1]]
  *
  * https://dev.to/pahujanayan/100-days-day-2-11g
- * 
+ *
  * According to the Criterion.rs benchmark, both example are equal in performance.
  */
 pub fn set_matrix_zeroes(matrix: &mut Vec<Vec<i32>>) {
@@ -123,7 +123,27 @@ pub fn set_matrix_zeroes_ai_version(matrix: &mut Vec<Vec<i32>>) {
  * https://dev.to/pahujanayan/100-days-day-3-n24
  */
 pub fn get_pascal_triangle(n: usize) -> Vec<Vec<i32>> {
-    todo!();
+    if n == 0 {
+        return vec![];
+    }
+
+    let mut basic_pascal_triangle = vec![vec![1]];
+
+    for i in 1..n {
+        let previous_row = &basic_pascal_triangle[i - 1];
+        let mut current_row: Vec<i32> = vec![];
+
+        current_row.push(1);
+
+        for j in 0..previous_row.len() - 1 {
+            current_row.push(previous_row[j] + previous_row[j + 1]);
+        }
+
+        current_row.push(1);
+        basic_pascal_triangle.push(current_row);
+    }
+
+    basic_pascal_triangle
 }
 
 /**
@@ -192,7 +212,10 @@ mod tests {
         super::set_matrix_zeroes_ai_version(&mut matrix_ai);
 
         assert_eq!(matrix, vec![vec![1, 0, 1], vec![0, 0, 0], vec![1, 0, 1],]);
-        assert_eq!(matrix_ai, vec![vec![1, 0, 1], vec![0, 0, 0], vec![1, 0, 1],]);
+        assert_eq!(
+            matrix_ai,
+            vec![vec![1, 0, 1], vec![0, 0, 0], vec![1, 0, 1],]
+        );
 
         let mut matrix2 = vec![vec![1, 1, 1], vec![0, 1, 0], vec![1, 1, 1]];
         let mut matrix2_ai = vec![vec![1, 1, 1], vec![0, 1, 0], vec![1, 1, 1]];
@@ -200,12 +223,19 @@ mod tests {
         super::set_matrix_zeroes_ai_version(&mut matrix2_ai);
 
         assert_eq!(matrix2, vec![vec![0, 1, 0], vec![0, 0, 0], vec![0, 1, 0],]);
-        assert_eq!(matrix2_ai, vec![vec![0, 1, 0], vec![0, 0, 0], vec![0, 1, 0],]);
+        assert_eq!(
+            matrix2_ai,
+            vec![vec![0, 1, 0], vec![0, 0, 0], vec![0, 1, 0],]
+        );
     }
 
     #[test]
     fn get_pascal_triangle_test() {
-        todo!();
+        assert_eq!(super::get_pascal_triangle(0), vec![] as Vec<Vec<i32>>);
+        assert_eq!(super::get_pascal_triangle(1), vec![vec![1]]);
+        assert_eq!(super::get_pascal_triangle(2), vec![vec![1], vec![1, 1]]);
+        assert_eq!(super::get_pascal_triangle(5), vec![vec![1], vec![1, 1], vec![1, 2, 1], vec![1, 3, 3, 1], vec![1, 4, 6, 4, 1]]);
+        assert_eq!(super::get_pascal_triangle(9)[8][4], 70);
     }
 
     #[test]

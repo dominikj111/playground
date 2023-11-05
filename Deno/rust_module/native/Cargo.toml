@@ -1,0 +1,15 @@
+[package]
+name = "native"
+version = "1.0.0"
+authors = ["dominikj111 <dominik.jelinek111@gmail.com>"]
+edition = "2021"
+
+[lib]
+name = "native"
+crate-type = ["cdylib"]
+
+[dependencies]
+deno_core = "0.223.0"
+deno_bindgen = "0.8.1"
+serde = { version = "1", features = ["derive"] }
+peak_alloc = "0.2.0"

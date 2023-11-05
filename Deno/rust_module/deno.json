@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "build-native": "cd native && cargo build && cd ..",
+    "run": "deno run --allow-ffi --unstable main.ts",
+    "dev": "deno run --allow-ffi --unstable --watch main.ts",
+    "test": "deno test --allow-ffi --unstable"
+  }
+}

@@ -1,0 +1,4 @@
+I want a cli tool to run multiple utilities which will share common code base.
+
+At the moment I want to process result returned by curl or pipe the text file in
+example "https://adventofcode.com/2023/day/1/input"

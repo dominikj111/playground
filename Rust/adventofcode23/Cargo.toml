@@ -9,3 +9,4 @@ edition = "2021"
 clap = { version = "4.4.11", features = ["derive"] }
 colored = "2.0.4"
 indicatif = "0.17.7"
+regex = "1.10.2"

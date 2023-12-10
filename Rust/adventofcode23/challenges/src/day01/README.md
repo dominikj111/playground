@@ -2,7 +2,7 @@
 
 url: [https://adventofcode.com/2023/day/1](https://adventofcode.com/2023/day/1)
 
-## --- Day 1: Trebuchet?! ---
+## Trebuchet?!
 
 ## Part 1
 

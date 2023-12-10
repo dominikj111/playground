@@ -2,7 +2,10 @@ const NUMBERS: [&str; 9] = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-fn find_number_in_sentence(characters: impl Iterator<Item = char>, concat: fn(&str, &str) -> String) -> Option<u32> {
+fn find_number_in_sentence(
+    characters: impl Iterator<Item = char>,
+    concat: fn(&str, &str) -> String,
+) -> Option<u32> {
     let mut potential_number = String::new();
     let mut result_number = 0;
 
@@ -13,6 +16,7 @@ fn find_number_in_sentence(characters: impl Iterator<Item = char>, concat: fn(&s
                 break;
             }
             _ => {
+                // NOTE: This match branch is related to deal with the part 2 of the challenge, to get result of the part 1, comment it out.
                 potential_number = concat(&potential_number, &character.to_string().as_str());
                 for (i, number) in NUMBERS.iter().enumerate() {
                     if potential_number.contains(*number) {

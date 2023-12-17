@@ -3,16 +3,21 @@ mod utils;
 use std::io::{self, BufRead, BufReader, Cursor};
 use utils::{find_end_number, find_start_number};
 
-pub fn go_without_input() -> String {
-    go(io::stdin().lock())
+pub fn go_without_input(part: u8) -> String {
+    go(part, io::stdin().lock())
 }
 
-pub fn go_with_input(input: &str) -> String {
+pub fn go_with_input(part: u8, input: &str) -> String {
     let cursor = Cursor::new(input);
-    go(BufReader::new(cursor))
+    go(part, BufReader::new(cursor))
 }
 
-fn go(input: impl BufRead) -> String {
+fn go(part: u8, input: impl BufRead) -> String {
+    if [1, 2].contains(&part) == false {
+        panic!("The part can be 1 or 2 only");
+    }
+
+    let include_worded_numbers = part == 2;
     let mut sum = 0;
     for line in input.lines() {
         match line {
@@ -22,8 +27,8 @@ fn go(input: impl BufRead) -> String {
                 }
                 match format!(
                     "{}{}",
-                    find_start_number(&line_sentence),
-                    find_end_number(&line_sentence)
+                    find_start_number(&line_sentence, include_worded_numbers),
+                    find_end_number(&line_sentence, include_worded_numbers)
                 )
                 .parse::<u32>()
                 {
@@ -54,7 +59,7 @@ mod tests {
 
     #[test]
     fn go_test() {
-        assert_eq!(go_with_input(CALIBRATION_DOCUMENT_142), "142");
-        assert_eq!(go_with_input(CALIBRATION_DOCUMENT_281), "281");
+        assert_eq!(go_with_input(1, CALIBRATION_DOCUMENT_142), "142");
+        assert_eq!(go_with_input(2, CALIBRATION_DOCUMENT_281), "281");
     }
 }

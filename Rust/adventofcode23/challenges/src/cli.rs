@@ -7,6 +7,10 @@ pub struct Args {
     #[arg(short, long)]
     pub day: u8,
 
+    /// What part of the challenge to go?
+    #[arg(short, long, default_value = "1")]
+    pub part: u8,
+
     /// Path to data file
     #[arg(short, long, default_value = "")]
     pub input: String,

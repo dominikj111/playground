@@ -4,6 +4,7 @@ use std::fs;
 mod cli;
 mod day01;
 mod day02;
+mod day03;
 
 fn println_challenge_result(day: u8, part: u8, result: String) {
     let result_message = "The solution for day [day] challenge of part [part] is:"
@@ -35,6 +36,15 @@ fn main() {
             } else {
                 let contents = fs::read_to_string(args.input).expect("Cannot read the input file");
                 day02::go_with_input(args.part, &contents)
+            };
+            println_challenge_result(args.day, args.part, result);
+        }
+        3 => {
+            let result = if args.input.is_empty() {
+                day03::go_without_input(args.part)
+            } else {
+                let contents = fs::read_to_string(args.input).expect("Cannot read the input file");
+                day03::go_with_input(args.part, &contents)
             };
             println_challenge_result(args.day, args.part, result);
         }

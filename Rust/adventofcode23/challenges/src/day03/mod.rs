@@ -1,3 +1,4 @@
+mod model;
 mod utils;
 
 use std::io::{self, BufRead, BufReader, Cursor};

@@ -3,12 +3,6 @@ name = "bevy-hello-2d"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[[bin]]
-name = "bevy-hello-bin"
-path = "src/main.rs"
-
 # Enable a small amount of optimization in debug mode
 [profile.dev]
 opt-level = 1
@@ -18,7 +12,7 @@ opt-level = 1
 opt-level = 3
 
 [dependencies]
-bevy = { version = "0.11.0", features = ["dynamic_linking"] }
+bevy = { version = "0.12.1", features = ["dynamic_linking"] }
 
 [package.metadata.clippy]
 # List of lints to allow, in addition to those allowed by default

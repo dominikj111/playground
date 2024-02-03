@@ -1,0 +1,5 @@
+env.sh
+sbt
+cache
+**/target
+**/logs

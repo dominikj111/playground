@@ -1,9 +1,9 @@
 [package]
-name = "bevy-hello-2d"
+name = "bevy-examples"
 version = "0.1.0"
 edition = "2021"
 
-# Enable a small amount of optimization in debug mode
+#  Enable a small amount of optimization in debug mode
 [profile.dev]
 opt-level = 1
 
@@ -12,7 +12,11 @@ opt-level = 1
 opt-level = 3
 
 [dependencies]
-bevy = { version = "0.12.1", features = ["dynamic_linking"] }
+clap = { version = "4.4.11", features = ["derive"] }
+colored = "2.0.4"
+common = { path = "../common" }
+bloom_2d = { path = "../apps/bloom_2d" }
+hello_shapes = { path = "../apps/hello_shapes" }
 
 [package.metadata.clippy]
 # List of lints to allow, in addition to those allowed by default

@@ -16,6 +16,9 @@ fn main() {
         "hello_shapes" => {
             hello_shapes::main();
         }
+        "mesh_2d" => {
+            mesh_2d::main();
+        }
         _ => panic!("App name {} not implemented yet", args.appname),
     }
 

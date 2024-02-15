@@ -1,4 +1,10 @@
 [workspace]
-members = ["common", "apps/bloom_2d", "apps/hello_shapes", "entrypoint"]
+members = [
+    "common",
+    "apps/bloom_2d",
+    "apps/hello_shapes",
+    "apps/mesh_2d",
+    "entrypoint",
+]
 
 resolver = "2"

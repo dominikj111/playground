@@ -11,3 +11,5 @@
 ## PHP CLI tool tutorial
 
 [dev.to => Writing command line scripts in PHP](https://dev.to/gbhorwood/writing-command-line-scripts-in-php-part-1-3jpb)
+
+[tech.osteel.me => How to build CLI applications with PHP and distribute by composer](https://tech.osteel.me/posts/how-to-build-and-distribute-beautiful-command-line-applications-with-php-and-composer)

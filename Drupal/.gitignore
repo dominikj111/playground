@@ -1,0 +1,5 @@
+database
+logs
+wwwroot/blog/*
+wwwroot/blog/.*
+!wwwroot/blog/.keep

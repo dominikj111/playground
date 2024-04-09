@@ -1,0 +1,24 @@
+To make self-signed certificate, do:
+
+1. openssl genpkey -algorithm RSA -out server.key
+2. openssl req -new -key server.key -out server.csr
+3. openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+-----
+
+To make self-signed certificate issue for the localhost as a SAN, do:
+
+1. openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj '/CN=localhost' -extensions SAN -config <(cat /System/Library/OpenSSL/openssl.cnf <(printf '[SAN]\nsubjectAltName=DNS:localhost')) 
+
+-----
+
+Check in the Chrome Security tab
+
+-----
+
+Don't foprget manually add and trust the certificate in the Keychain Access, cert double click will add it.
+In the Keychain Access, double click on certificate and trust section allow to trust the certificate.
+
+=====
+
+docker exec cache-server /bin/bash -c "/etc/init.d/nginx reload"

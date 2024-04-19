@@ -1,6 +1,6 @@
 FROM php:8.2.17-fpm-bookworm
 
-RUN apt update && apt upgrade
+RUN apt update && apt upgrade -y
 RUN apt install -y unzip zlib1g-dev libpng-dev
 
 RUN docker-php-ext-install mysqli

@@ -3,8 +3,8 @@ use mesh_2d::{Board, Entity};
 
 #[test]
 fn has_new_and_default() {
-    let board1: Board<'static, usize> = Board::new();
-    let board2: Board<'static, usize> = Board::default();
+    let board1: Board<usize> = Board::new();
+    let board2: Board<usize> = Board::default();
 
     assert_eq!(board1, board2);
 }
@@ -25,7 +25,7 @@ fn maximum_provided_coordinates_defines_the_board_dimension() {
         ..Default::default()
     };
     assert_eq!(board.dimension(), (0, 0));
-    board.set(&entity);
+    board.set(entity);
     assert_eq!(board.dimension(), (4, 2));
 }
 
@@ -50,11 +50,11 @@ fn allows_to_set_and_get_entities() {
 
     assert_eq!(board.get(1, 1), None);
 
-    board.set(&entity1);
-    board.set(&entity2);
-    board.set(&entity3);
+    board.set(entity1);
+    board.set(entity2);
+    board.set(entity3);
 
-    assert_eq!(board.get(1, 1), Some(&entity1));
+    assert_eq!(board.get(1, 1), Some(entity1));
     assert_eq!(board.get(1, 2).unwrap().color, Color::RED);
     assert_eq!(board.get(2, 3).unwrap().color, Color::BLUE);
 
@@ -72,9 +72,9 @@ fn allows_to_clear_entities() {
 
     assert_eq!(board.get(2, 4), None);
 
-    board.set(&entity1);
+    board.set(entity1);
 
-    assert_eq!(board.get(2, 4), Some(&entity1));
+    assert_eq!(board.get(2, 4), Some(entity1));
 
     board.clear(2, 4);
 
@@ -96,8 +96,8 @@ fn doesnt_override_existing_entities() {
         ..Default::default()
     };
 
-    board.set(&entity1);
-    board.set(&entity2);
+    board.set(entity1);
+    board.set(entity2);
 }
 
 #[test]
@@ -114,8 +114,8 @@ fn allows_to_override_existing_entities_if_flag_is_set() {
         ..Default::default()
     };
 
-    board.set_force(&entity1, true);
-    board.set_force(&entity2, true);
+    board.set_force(entity1, true);
+    board.set_force(entity2, true);
 
-    assert_eq!(board.get(1, 1), Some(&entity2));
+    assert_eq!(board.get(1, 1), Some(entity2));
 }

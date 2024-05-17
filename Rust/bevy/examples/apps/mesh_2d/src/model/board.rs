@@ -1,13 +1,13 @@
 use super::entity::Entity;
-use std::{any::Any, fmt::Debug};
+use std::fmt::Debug;
 
 #[derive(Default, Debug, Clone)]
-pub struct Board<'a, DT: Clone + Copy> {
-    plane: Vec<Vec<Option<&'a Entity<DT>>>>,
+pub struct Board<DT: Clone + Copy> {
+    plane: Vec<Vec<Option<Entity<DT>>>>,
     dimension: (usize, usize),
 }
 
-impl<'a, DT: Clone + Copy> Board<'a, DT> {
+impl<DT: Clone + Copy> Board<DT> {
     pub fn new() -> Self {
         Self {
             plane: Vec::new(),
@@ -15,14 +15,14 @@ impl<'a, DT: Clone + Copy> Board<'a, DT> {
         }
     }
 
-    pub fn get(&self, x: usize, y: usize) -> Option<&'a Entity<DT>> {
+    pub fn get(&self, x: usize, y: usize) -> Option<Entity<DT>> {
         if x >= self.plane.len() || y >= self.plane[x].len() {
             return None;
         }
         self.plane[x][y]
     }
 
-    pub fn set_force(&mut self, value: &'a Entity<DT>, force: bool) {
+    pub fn set_force(&mut self, value: Entity<DT>, force: bool) {
         let (x, y) = value.coordinates;
         if !force && self.get(x, y).is_some() {
             panic!("Overwriting board entity at ({}, {})", x, y);
@@ -40,7 +40,7 @@ impl<'a, DT: Clone + Copy> Board<'a, DT> {
         self.plane[x][y] = Some(value);
     }
 
-    pub fn set(&mut self, value: &'a Entity<DT>) {
+    pub fn set(&mut self, value: Entity<DT>) {
         self.set_force(value, false);
     }
 
@@ -55,9 +55,8 @@ impl<'a, DT: Clone + Copy> Board<'a, DT> {
     }
 }
 
-impl<'a, DT: Clone + Copy + PartialEq> PartialEq for Board<'a, DT> {
+impl<DT: Clone + Copy + PartialEq> PartialEq for Board<DT> {
     fn eq(&self, other: &Self) -> bool {
         self.plane == other.plane && self.dimension == other.dimension
     }
 }
-

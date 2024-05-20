@@ -6,17 +6,11 @@ use std::collections::HashSet;
 
 use crate::prelude::*;
 
-#[derive(Resource)]
+#[derive(Default, Resource, Debug)]
 pub struct State {
     pub board: Board<Entity<&'static Handle<ColorMaterial>>>,
     pub keyboard_pressed: HashSet<KeyCode>,
 }
 
-impl Default for State {
-    fn default() -> Self {
-        State {
-            keyboard_pressed: HashSet::new(),
-            board: Board::new(),
-        }
-    }
-}
+#[derive(Default, Resource, Debug)]
+pub struct StateTrack(pub (State, State), pub bool);

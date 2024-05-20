@@ -1,4 +1,5 @@
 mod utils;
+use prelude::StateTrack;
 pub use utils::random_color;
 
 mod systems;
@@ -9,12 +10,12 @@ use systems::{
 mod model;
 mod state;
 mod prelude {
-    pub use crate::model::{Board, BoardItem, Entity};
-    pub use crate::state::State;
+    pub use crate::model::{tags, Board, Entity};
+    pub use crate::state::{State, StateTrack};
     pub use crate::utils::random_color;
 }
 
-use crate::model::BoardItem;
+use crate::model::tags::BoardItem;
 pub use crate::model::{Board, Entity};
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
@@ -35,14 +36,11 @@ fn setup(
 ) {
     commands.spawn(Camera2dBundle::default());
 
-    let mut app_state = state::State::default();
+    let app_state = state::State::default();
 
     for i in 0..3 {
         for j in 0..3 {
             let material = materials.add(random_color());
-            // let entity = Entity::new_with_data((i, j), &material);
-
-            // app_state.board.set(entity);
 
             commands.spawn((
                 MaterialMesh2dBundle {
@@ -55,13 +53,20 @@ fn setup(
                     material,
                     ..default()
                 },
-                BoardItem {},
+                BoardItem,
             ));
         }
     }
 
-    // commands.insert_resource(State {
-    //     ..crate::state::State::default()
-    // });
-    commands.insert_resource(app_state);
+    commands.insert_resource(StateTrack(
+        (state::State::default(), app_state),
+        false,
+    ));
+
+    commands.spawn(MaterialMesh2dBundle {
+        mesh: meshes.add(Rectangle::default()).into(),
+        transform: Transform::default().with_scale(Vec3::splat(128.)),
+        material: materials.add(Color::PURPLE),
+        ..default()
+    });
 }

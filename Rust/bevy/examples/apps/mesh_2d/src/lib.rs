@@ -1,22 +1,19 @@
 mod utils;
-use prelude::StateTrack;
 pub use utils::random_color;
 
 mod systems;
-use systems::{
-    system_listeners::keyboard_event_system, update_colours_system, update_state_system,
-};
+use systems::{system_listeners::keyboard_event_system, update_colours_system};
 
 mod model;
 mod state;
 mod prelude {
-    pub use crate::model::{tags, Board, Entity};
+    pub use crate::model::{tags, Board, Entity, Float64Value};
     pub use crate::state::{State, StateTrack};
     pub use crate::utils::random_color;
 }
 
 use crate::model::tags::BoardItem;
-pub use crate::model::{Board, Entity};
+pub use crate::model::{Board, Entity, Float64Value};
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 
@@ -24,7 +21,7 @@ pub fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, setup)
-        .add_systems(PreUpdate, (keyboard_event_system, update_state_system))
+        .add_systems(PreUpdate, keyboard_event_system)
         .add_systems(Update, update_colours_system)
         .run();
 }
@@ -58,10 +55,7 @@ fn setup(
         }
     }
 
-    commands.insert_resource(StateTrack(
-        (state::State::default(), app_state),
-        false,
-    ));
+    commands.insert_resource(app_state);
 
     commands.spawn(MaterialMesh2dBundle {
         mesh: meshes.add(Rectangle::default()).into(),

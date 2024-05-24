@@ -1,5 +1,5 @@
 use bevy::prelude::Color;
-use std::{any::Any, fmt::Debug};
+use std::fmt::Debug;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Entity<DT: Clone + Copy> {

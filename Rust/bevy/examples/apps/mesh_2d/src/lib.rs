@@ -18,12 +18,32 @@ pub use crate::model::{Board, Entity, Float64Value};
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 
 pub fn main() {
+    let default_panic = std::panic::take_hook();
+    std::panic::set_hook(Box::new(move |info| {
+        // Do some reaction for panicked application just here,
+        // HTTP Requests, etc. (https://stackoverflow.com/a/45623133/6493531)
+        default_panic(info);
+    }));
+
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, setup)
         .add_systems(PreUpdate, keyboard_event_system)
         .add_systems(Update, update_colours_system)
+        .add_systems(PostUpdate, panic_system_test.pipe(error_handler))
         .run();
+}
+
+fn panic_system_test() -> std::io::Result<()> {
+    // Err(std::io::Error::new(std::io::ErrorKind::Other, "oh no"))
+    Ok(())
+}
+
+fn error_handler(In(result): In<std::io::Result<()>>, mut commands: Commands) {
+    match result {
+        Ok(_) => {}
+        Err(err) => println!("Encountered an error: '{err:?}'"),
+    }
 }
 
 fn setup(

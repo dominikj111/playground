@@ -43,8 +43,8 @@ fn setup(
                 MaterialMesh2dBundle {
                     mesh: meshes.add(Rectangle::default()).into(),
                     transform: Transform {
-                        translation: Vec3::new((i * 10) as f32, (j * 10) as f32, 10.),
-                        scale: Vec3::splat(12.),
+                        translation: Vec3::new((i * 10) as f32, (j * 10) as f32, 1.),
+                        scale: Vec3::splat(10.),
                         ..default()
                     },
                     material,

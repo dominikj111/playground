@@ -7,7 +7,7 @@ pub fn update_colours_system(
     time: Res<Time>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut last_colour_update: Local<f64>,
-) {
+) -> Result<()> {
     info!("{:?}", handels.iter().count());
     info!("board speed change: {:?}", state.board_speed_change.get());
 
@@ -20,4 +20,6 @@ pub fn update_colours_system(
         *last_colour_update = 0.0;
     }
     *last_colour_update += time.delta().as_secs_f64();
+
+    Ok(())
 }

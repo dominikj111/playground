@@ -5,7 +5,7 @@ pub mod system_listeners {
     pub fn keyboard_event_system(
         mut keyboard_input_events: EventReader<KeyboardInput>,
         mut state: ResMut<crate::state::State>,
-    ) {
+    ) -> crate::prelude::Result<()> {
         for event in keyboard_input_events.read() {
             match event.state {
                 ButtonState::Pressed => {
@@ -26,5 +26,7 @@ pub mod system_listeners {
                 }
             }
         }
+
+        Ok(())
     }
 }

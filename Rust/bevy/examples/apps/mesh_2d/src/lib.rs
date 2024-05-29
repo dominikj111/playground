@@ -10,10 +10,12 @@ mod prelude {
     pub use crate::model::{tags, Board, Entity, Float64Value};
     pub use crate::state::{State, StateTrack};
     pub use crate::utils::random_color;
+    pub use std::io::Result;
 }
 
 use crate::model::tags::BoardItem;
 pub use crate::model::{Board, Entity, Float64Value};
+pub use std::io::{ErrorKind, Result};
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 
@@ -22,27 +24,28 @@ pub fn main() {
     std::panic::set_hook(Box::new(move |info| {
         // Do some reaction for panicked application just here,
         // HTTP Requests, etc. (https://stackoverflow.com/a/45623133/6493531)
+        error!("Application panicked!");
         default_panic(info);
     }));
 
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_systems(Startup, setup)
-        .add_systems(PreUpdate, keyboard_event_system)
-        .add_systems(Update, update_colours_system)
+        .add_systems(Startup, setup.pipe(error_handler))
+        .add_systems(PreUpdate, keyboard_event_system.pipe(error_handler))
+        .add_systems(Update, update_colours_system.pipe(error_handler))
         .add_systems(PostUpdate, panic_system_test.pipe(error_handler))
         .run();
 }
 
-fn panic_system_test() -> std::io::Result<()> {
-    // Err(std::io::Error::new(std::io::ErrorKind::Other, "oh no"))
+fn panic_system_test() -> Result<()> {
+    // Err(Error::new(ErrorKind::Other, "oh no"))
     Ok(())
 }
 
-fn error_handler(In(result): In<std::io::Result<()>>, mut commands: Commands) {
+fn error_handler(In(result): In<Result<()>>, mut commands: Commands) {
     match result {
         Ok(_) => {}
-        Err(err) => println!("Encountered an error: '{err:?}'"),
+        Err(err) => error!("System failed: {:?}", err),
     }
 }
 
@@ -50,7 +53,7 @@ fn setup(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
-) {
+) -> Result<()> {
     commands.spawn(Camera2dBundle::default());
 
     let app_state = state::State::default();
@@ -83,4 +86,6 @@ fn setup(
         material: materials.add(Color::PURPLE),
         ..default()
     });
+
+    Ok(())
 }

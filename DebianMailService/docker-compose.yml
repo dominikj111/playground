@@ -1,0 +1,38 @@
+services:
+  php:
+    build:
+      context: .
+      args:
+        CENV: development
+        CTZ: Europe/Prague
+        CLOCALE: cs_CZ.UTF-8
+        GITEMAIL: ...@gmail.com
+        GITNAME: dominikj111
+    container_name: mailing-php
+    working_dir: /app
+    volumes:
+      - .msmtprc:/etc/msmtprc
+      # - .msmtprc:/root/.msmtprc
+      - .muttrc:/root/.muttrc
+      - ./logs/mail:/var/log/mail
+      - ./logs/msmtp:/var/log/msmtp
+      - ./logs/php:/var/log/php
+      - ./senders:/senders
+    depends_on:
+      - mailhog
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailing-mailhog # must be same as in the [project_root]/configs/php/[environment]/.msmtprc
+    ports:
+      - "8025:8025"
+    environment:
+      MH_SMTP_BIND_ADDR: 0.0.0.0:4055 # must be same as in the [project_root]/configs/php/[environment]/.msmtprc
+      MH_API_BIND_ADDR: 0.0.0.0:8025
+      MH_UI_BIND_ADDR: 0.0.0.0:8025
+
+# docker network create mailing-network
+
+networks:
+  default:
+    name: mailing-network

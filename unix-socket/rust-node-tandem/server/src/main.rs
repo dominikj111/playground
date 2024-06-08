@@ -28,6 +28,11 @@ fn main() {
 
     println!("Hello, unix socket! Listening ...");
 
+    // A better way would be to do `rx.recv()` what wait untill the message is received in blocking manner.
+    // Similar to `unix_listener.accept()`.
+    // So this is a candidate to run in a separate thread and leave tha main thread alone,
+    //      unles we want to process received data in the main thread.
+    //      We need to inform the main thread about changes anyway (event, shared data).
     loop {
         if let Ok(data) = rx.try_recv() {
             println!("Received data: {:?}", data);

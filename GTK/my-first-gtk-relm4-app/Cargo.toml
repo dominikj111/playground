@@ -1,0 +1,15 @@
+[package]
+name = "my-first-gtk-app"
+version = "0.1.0"
+authors = ["dominikj111 <dominik.jelinek111@gmail.com>"]
+edition = "2021"
+publish = false
+
+[profile.release]
+lto = true
+
+[dependencies]
+gettext-rs = { git = "https://github.com/gettext-rs/gettext-rs.git", features = ["gettext-system"] }
+relm4 = { version = "0.8.1", features = ["libadwaita", "gnome_46"] }
+tracing = "0.1.37"
+tracing-subscriber = "0.3"

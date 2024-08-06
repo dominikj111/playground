@@ -1,0 +1,222 @@
+[package]
+name = "gtk4-rs-examples"
+edition = "2021"
+authors = ["The gtk-rs Project Developers"]
+version = "0.10.0"
+
+[dependencies]
+chrono = "0.4"
+
+femtovg = { version = "0.9", optional = true, default-features = false }
+glium = { version = "0.34", optional = true, default-features = false }
+glow = { version = "0.13.0", optional = true }
+epoxy = { version = "0.1.0", optional = true }
+libloading = { version = "0.8.0", optional = true }
+im-rc = { version = "15", optional = true }
+async-channel = { version = "2.3", optional = true }
+tokio = { version = "1", features = ["full"], optional = true }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false, optional = true }
+serde = { version = "1.0", features = ["derive"], optional = true }
+gtk = { version = "0.9.0", package = "gtk4", features = ["v4_14"] }
+
+# used by gif-paintable example
+[dependencies.image]
+version = "0.25"
+features = ["gif"]
+default-features = false
+optional = true
+
+[features]
+default = []
+femtovg-support = ["epoxy", "femtovg", "glow", "libloading"]
+glium-support = ["glium", "epoxy", "libloading"]
+tokio = ["dep:tokio", "async-channel", "reqwest", "serde"]
+
+[[bin]]
+name = "about_dialog"
+path = "about_dialog/main.rs"
+required-features = ["v4_6"]
+
+[[bin]]
+name = "basics"
+path = "basics/main.rs"
+
+[[bin]]
+name = "builder_pattern"
+path = "builder_pattern/main.rs"
+
+[[bin]]
+name = "clipboard"
+path = "clipboard/main.rs"
+
+[[bin]]
+name = "clock"
+path = "clock/main.rs"
+
+[[bin]]
+name = "column_view_datagrid"
+path = "column_view_datagrid/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "composite_template"
+path = "composite_template/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "composite_dialog"
+path = "composite_dialog/main.rs"
+
+[[bin]]
+name = "confetti_snapshot_animation"
+path = "confetti_snapshot_animation/main.rs"
+
+[[bin]]
+name = "content_provider"
+path = "content_provider/main.rs"
+
+[[bin]]
+name = "css"
+path = "css/main.rs"
+required-features = ["v4_12"]
+
+[[bin]]
+name = "custom_application"
+path = "custom_application/main.rs"
+
+[[bin]]
+name = "custom_buildable"
+path = "custom_buildable/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "custom_editable"
+path = "custom_editable/main.rs"
+required-features = ["v4_12"]
+
+[[bin]]
+name = "custom_layout_manager"
+path = "custom_layout_manager/main.rs"
+
+[[bin]]
+name = "custom_paintable"
+path = "custom_paintable/main.rs"
+
+[[bin]]
+name = "custom_orientable"
+path = "custom_orientable/main.rs"
+
+[[bin]]
+name = "custom_widget"
+path = "custom_widget/main.rs"
+
+[[bin]]
+name = "dialog"
+path = "dialog/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "entry_completion"
+path = "entry_completion/main.rs"
+
+[[bin]]
+name = "entry_undo"
+path = "entry_undo/main.rs"
+
+[[bin]]
+name = "expressions"
+path = "expressions/main.rs"
+
+[[bin]]
+name = "femtovg_area"
+path = "femtovg_area/main.rs"
+required-features = ["femtovg-support"]
+
+[[bin]]
+name = "flow_box"
+path = "flow_box/main.rs"
+
+[[bin]]
+name = "gif_paintable"
+path = "gif_paintable/main.rs"
+required-features = ["image"]
+
+[[bin]]
+name = "glium_gl_area"
+path = "glium_gl_area/main.rs"
+required-features = ["glium-support"]
+
+[[bin]]
+name = "grid_packing"
+path = "grid_packing/main.rs"
+
+[[bin]]
+name = "gtk_builder"
+path = "gtk_builder/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "list_box_model"
+path = "list_box_model/main.rs"
+required-features = ["im-rc"]
+
+[[bin]]
+name = "list_view_apps_launcher"
+path = "list_view_apps_launcher/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "menubar"
+path = "menubar/main.rs"
+
+[[bin]]
+name = "rotation_bin"
+path = "rotation_bin/main.rs"
+
+[[bin]]
+name = "scale"
+path = "scale/main.rs"
+
+[[bin]]
+name = "scale_bin"
+path = "scale_bin/main.rs"
+
+[[bin]]
+name = "search_bar"
+path = "search_bar/main.rs"
+
+[[bin]]
+name = "squares"
+path = "squares/main.rs"
+
+[[bin]]
+name = "squeezer_bin"
+path = "squeezer_bin/main.rs"
+
+[[bin]]
+name = "fill_and_stroke"
+path = "fill_and_stroke/main.rs"
+required-features = ["v4_14"]
+
+[[bin]]
+name = "text_viewer"
+path = "text_viewer/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "tokio_async_request"
+path = "tokio_async_request/main.rs"
+required-features = ["tokio"]
+
+[[bin]]
+name = "video_player"
+path = "video_player/main.rs"
+required-features = ["v4_10"]
+
+[[bin]]
+name = "virtual_methods"
+path = "virtual_methods/main.rs"
+
+[[bin]]
+name = "basic_wgpu_bevy"
+path = "basic_wgpu_bevy/main.rs"

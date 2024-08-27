@@ -1,0 +1,26 @@
+[package]
+name = "with-python"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.76.0"
+
+[dependencies]
+eframe = { path = "../../../third_party/egui/crates/eframe", features = [
+    "default",
+    "__screenshot", # __screenshot is so we can dump a screenshot using EFRAME_SCREENSHOT_TO
+] }
+
+# For image support:
+egui_extras = { path = "../../../third_party/egui/crates/egui_extras", features = [
+    "default",
+    "image",
+] }
+
+env_logger = { version = "0.11.5", default-features = false, features = [
+    "auto-color",
+    "humantime",
+] }
+
+[dependencies.pyo3]
+version = "0.22.2"
+features = ["auto-initialize"]

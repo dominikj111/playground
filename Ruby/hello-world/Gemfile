@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+gem 'minitest', '5.25.1'
+gem 'rake', '13.2.1'
+gem 'rubocop', '1.67.0'
+
+gem 'minitest-reporters', require: false
+gem 'rubocop-minitest', require: false
+gem 'rubocop-rake', require: false

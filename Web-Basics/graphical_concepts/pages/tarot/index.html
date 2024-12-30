@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Card Reading</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      }
+      #app {
+        width: 100vw;
+        height: 100vh;
+      }
+      .controls {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+      }
+      button {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .reading-result {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 80%;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <button id="singleCard">Draw Single Card</button>
+      <button id="threeCards">Draw Three Cards</button>
+      <button id="fiveCards">Draw Five Cards</button>
+      <button id="reset">Reset</button>
+    </div>
+    <div id="app"></div>
+    <div id="readingResult" class="reading-result"></div>
+    <script type="module" src="./tarot.ts"></script>
+  </body>
+</html>

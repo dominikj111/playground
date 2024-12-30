@@ -37,6 +37,8 @@ const runEsbuild = async (entryPoint: string, outfile: string) => {
       "--format=esm",
       "--platform=browser",
       "--target=es2020,chrome80,firefox80,safari13",
+      "--loader:.tsx=tsx", // Add TSX loader
+      "--jsx=transform", // Add JSX transform
       `--outfile=${outfile}`,
     ],
   });
@@ -52,10 +54,16 @@ const runEsbuild = async (entryPoint: string, outfile: string) => {
 const processHtmlFile = async (file: string, destPath: string) => {
   let content = await Deno.readTextFile(file);
 
-  // Replace .ts script references with .js
+  // Replace .ts and .tsx script references with .js
   content = content.replace(
-    /<script([^>]*) src="([^"]+)\.ts"([^>]*)>/g,
+    /<script([^>]*) src="([^"]+)\.tsx?"([^>]*)>/g,
     '<script$1 src="$2.js"$3>',
+  );
+
+  // Replace import statements in inline scripts
+  content = content.replace(
+    /import\s+([^"']+)\s+from\s+["']([^"']+)\.(tsx?)["']/g,
+    'import $1 from "$2.js"',
   );
 
   await Deno.writeTextFile(destPath, content);
@@ -65,6 +73,7 @@ const processHtmlFile = async (file: string, destPath: string) => {
 // List of client-side TypeScript files to build
 const CLIENT_TS_FILES = [
   "pages/tarot/tarot.ts",
+  "pages/react/index.tsx", // Add our React module
 ];
 
 // Main build process
@@ -83,18 +92,20 @@ const main = async () => {
 
     // Build client-side TypeScript files
     for (const file of CLIENT_TS_FILES) {
-      const outfile = join(DIST_DIR, file.replace(/\.ts$/, ".js"));
+      const outfile = join(DIST_DIR, file.replace(/\.(tsx?|jsx?)$/, ".js"));
       await ensureDir(dirname(outfile));
       await runEsbuild(file, outfile);
       console.log(`Built: ${file} -> ${outfile}`);
     }
 
     // Copy and process HTML files
-    for await (const entry of walk(".", {
-      includeDirs: false,
-      match: [/\.html$/],
-      skip: [/dist/, /node_modules/],
-    })) {
+    for await (
+      const entry of walk(".", {
+        includeDirs: false,
+        match: [/\.html$/],
+        skip: [/dist/, /node_modules/],
+      })
+    ) {
       const destPath = join(DIST_DIR, entry.path);
       await ensureDir(dirname(destPath));
       await processHtmlFile(entry.path, destPath);
@@ -102,11 +113,13 @@ const main = async () => {
     }
 
     // Copy static assets (if any)
-    for await (const entry of walk(".", {
-      includeDirs: false,
-      match: [/\.(css|jpg|png|svg|gif)$/],
-      skip: [/dist/, /node_modules/],
-    })) {
+    for await (
+      const entry of walk(".", {
+        includeDirs: false,
+        match: [/\.(css|jpg|png|svg|gif)$/],
+        skip: [/dist/, /node_modules/],
+      })
+    ) {
       const destPath = join(DIST_DIR, entry.path);
       await ensureDir(dirname(destPath));
       await copy(entry.path, destPath, { overwrite: true });

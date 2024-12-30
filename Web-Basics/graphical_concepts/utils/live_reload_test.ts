@@ -9,16 +9,16 @@ Deno.test("injectLiveReload adds script to document head", () => {
       appendChild: (node: HTMLScriptElement) => {
         assertEquals(typeof node.textContent, "string");
         assertEquals(node.textContent?.includes("new WebSocket"), true);
-      }
+      },
     },
     createElement: (tag: string): HTMLScriptElement => {
       assertEquals(tag, "script");
       return { textContent: "" } as HTMLScriptElement;
-    }
+    },
   } as Document;
-  
+
   globalThis.document = mockDocument;
-  
+
   try {
     injectLiveReload();
   } finally {

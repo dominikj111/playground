@@ -48,6 +48,8 @@ const runEsbuild = async (entryPoint: string) => {
       "--format=esm",
       "--platform=browser",
       "--target=es2020",
+      "--loader:.tsx=tsx",
+      "--jsx=transform",
     ],
     stdout: "piped",
     stderr: "piped",
@@ -70,7 +72,7 @@ const watcher = Deno.watchFs(".");
   for await (const event of watcher) {
     if (
       event.kind === "modify" &&
-      event.paths[0].match(/\.(ts|js|html|css)$/)
+      event.paths[0].match(/\.(ts|tsx|js|html|css)$/)
     ) {
       console.log(`File changed: ${event.paths[0]}`);
       // Notify all clients to reload
@@ -89,8 +91,8 @@ const watcher = Deno.watchFs(".");
 Deno.serve({ port: 8000 }, async (req) => {
   const url = new URL(req.url);
 
-  // Handle .ts files
-  if (url.pathname.endsWith(".ts")) {
+  // Handle .ts and .tsx files
+  if (url.pathname.endsWith(".ts") || url.pathname.endsWith(".tsx")) {
     const filePath = "." + url.pathname;
     try {
       const code = await runEsbuild(filePath);

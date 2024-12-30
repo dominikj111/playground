@@ -238,6 +238,10 @@
     "https://deno.land/x/esbuild_deno_loader@0.8.2/src/shared.ts": "33052684aeb542ebd24da372816bbbf885cd090a7ab0fde7770801f7f5b49572",
     "https://deno.land/x/importmap@0.2.1/_util.ts": "ada9a9618b537e6c0316c048a898352396c882b9f2de38aba18fd3f2950ede89",
     "https://deno.land/x/importmap@0.2.1/mod.ts": "ae3d1cd7eabd18c01a4960d57db471126b020f23b37ef14e1359bbb949227ade",
+    "https://esm.sh/preact@10.25.4": "beb3e70513aaacffcc035df05c92bb72f22a3a8cda189cc96f50a668c3f02079",
+    "https://esm.sh/preact@10.25.4/hooks": "5b1c3190c15bb6a2313aff7199daac2676cb5a5bc454f0e32b7e739808ce9c2e",
+    "https://esm.sh/stable/preact@10.25.4/denonext/hooks.js": "2615ebd0dc85fffdffb785006a08341e748129f8332b9b75f887e1498bee5e1b",
+    "https://esm.sh/stable/preact@10.25.4/denonext/preact.mjs": "6b83349948fd5dddc7464dc6bd9a237d4bc602973dcb4fac93e80b9154441d6b",
     "https://unpkg.com/three@0.171.0/build/three.core.js": "ad0eb850a183c828dfb01f45b63920fca0e1b56a0fe9c4f7f6532019f9c48987",
     "https://unpkg.com/three@0.171.0/build/three.module.js": "c4c0f7bb4cd7c18b1bb04f1c606bbcc58da6430eb7b09b3eb5f2877b87dc115a"
   }

@@ -11,11 +11,18 @@ implementations using TypeScript, Three.js, and other web technologies.
 An immersive 3D Tarot card reading experience that demonstrates Three.js
 capabilities and interactive 3D graphics in the browser.
 
+### ⚛️ React Counter Demo
+
+A simple React (Preact) demonstration showcasing state management and event
+handling with a clean, modern UI using Tailwind CSS.
+
 ## Technology Stack
 
 - **Runtime**: Deno
 - **Languages**: TypeScript, HTML, CSS
 - **3D Graphics**: Three.js
+- **UI Frameworks**: Preact
+- **Styling**: Tailwind CSS
 - **Development Server**: Custom Deno server with TypeScript support
 
 ## Getting Started
@@ -40,5 +47,10 @@ The project uses a custom Deno server that handles:
 
 - `/pages` - Individual project implementations
   - `/tarot` - 3D Tarot card reading experience
+  - `/react` - Simple React counter demonstration
+- `/utils` - Utility functions and helpers
 - `server.ts` - Development server implementation
+- `build.ts` - Build script for production deployment
+- `prod_server.ts` - Production server implementation
 - `deno.json` - Deno configuration and import maps
+- `index.html` - Main application entry point

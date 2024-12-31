@@ -1,7 +1,59 @@
 # AI Instructions for Graphical Concepts Project
 
 This document provides instructions for AI assistants to help maintain and
-extend the project structure consistently.
+extend the project structure consistently. All code implementations MUST use
+TypeScript.
+
+## Project Overview
+
+This is a Deno-based modular web application focused on exploring and
+implementing various web development concepts. Key aspects:
+
+1. **Technology Stack**
+   - Deno as the runtime environment
+   - TypeScript for type-safe development
+   - ESM modules for dependency management
+   - Built-in development server with live reload
+
+2. **Modular Structure**
+   - Each concept/feature is a standalone page application
+   - Shared utilities and components
+   - Independent development and testing
+   - Easy to add new concepts without affecting existing ones
+
+3. **Development Focus**
+   - Web APIs and modern browser features
+   - Interactive graphics and animations
+   - UI frameworks and libraries
+   - Performance optimization techniques
+
+## TypeScript Standards
+
+1. **File Extensions**
+   - Use `.ts` for regular TypeScript files
+   - Use `.tsx` for files containing JSX/TSX syntax
+   - NEVER use `.js` or `.jsx` extensions
+
+2. **Type Safety**
+   - Enable strict TypeScript configuration
+   - Avoid using `any` type
+   - Define interfaces for all data structures
+   - Use proper type annotations for functions
+   - Leverage TypeScript's utility types
+
+3. **Component Types**
+   ```typescript
+   // Props interface
+   interface ComponentProps {
+     data: DataType;
+     onAction: (id: number) => void;
+   }
+
+   // Component with proper types
+   const Component = ({ data, onAction }: ComponentProps): JSX.Element => {
+     // Implementation
+   };
+   ```
 
 ## Creating a New Page Application
 
@@ -11,47 +63,77 @@ When creating a new page application, follow these steps:
    ```
    pages/
    └── [page-name]/
-       ├── index.html      # Entry point HTML
-       ├── index.[ts|tsx]  # Main application code
-       └── README.md       # Page-specific documentation
+       ├── index.html        # Entry point HTML
+       ├── index.tsx         # Main application code
+       ├── types.ts         # Type definitions
+       └── README.md        # Page-specific documentation
    ```
 
 2. **HTML Template Requirements**
    - Must include proper meta tags and viewport settings
-   - For development mode: Import source TypeScript/TSX files directly
+   - For development mode: Import source TypeScript files directly
    - Live reload script will be injected automatically by the dev server
 
-3. **Build System Integration**
-   - Add the main TS/TSX file to `CLIENT_TS_FILES` in `build.ts`
-   - Ensure proper loader configuration in both `server.ts` and `build.ts`
-   - Test both development (live reload) and production builds
+3. **Deno TypeScript Configuration**
+   - Configure TypeScript settings in `deno.json`
+   - Set compiler options for Deno environment
+   - Example:
+     ```json
+     {
+       "compilerOptions": {
+         "jsx": "react-jsx",
+         "jsxImportSource": "preact"
+       },
+       "imports": {
+         "preact": "https://esm.sh/preact@10.25.4",
+         "preact/hooks": "https://esm.sh/preact@10.25.4/hooks"
+       },
+       "tasks": {
+         "dev": "deno run --allow-net --allow-read server.ts"
+       }
+     }
+     ```
 
 4. **Import Management**
-   - For single-use external imports: Use direct URL imports
+   - For single-use external imports: Use direct URL imports with types
    - For shared dependencies: Add to `deno.json` import map
    - Example:
      ```json
      {
        "imports": {
-         "shared-lib": "https://esm.sh/shared-lib@version"
+         "preact": "https://esm.sh/preact@10.25.4",
+         "preact/hooks": "https://esm.sh/preact@10.25.4/hooks"
        }
      }
      ```
 
-5. **Documentation**
-   - Create a README.md for the page application
-   - Update root README.md to include the new page
-   - Document any special build or runtime requirements
+5. **Type Definitions**
+   - Create separate `types.ts` file for shared types
+   - Use TypeScript interfaces over type aliases when possible
+   - Export all types with proper documentation
+   - Example:
+     ```typescript
+     // types.ts
+     export interface DataItem {
+       id: number;
+       name: string;
+       value: number;
+     }
+
+     export type ActionType = "create" | "update" | "delete";
+     ```
 
 6. **Utility Functions**
    - Place shared utilities in `/utils` directory
    - Each utility must have associated unit tests
+   - Use proper TypeScript types and generics
    - Example structure:
      ```
      utils/
      ├── [feature]/
-     │   ├── index.ts
-     │   └── test.ts
+     │   ├── index.ts          # Implementation
+     │   ├── types.ts          # Type definitions
+     │   └── test.ts           # Tests
      └── README.md
      ```
 
@@ -59,92 +141,109 @@ When creating a new page application, follow these steps:
 
 Use this checklist to verify project structure integrity:
 
-1. **Page Application Structure**
+1. **TypeScript Configuration**
+   - [ ] Strict mode enabled
+   - [ ] Proper JSX configuration
+   - [ ] Appropriate module resolution
+   - [ ] Correct lib and target settings
+
+2. **Page Application Structure**
    - [ ] Proper directory naming (`pages/[page-name]`)
-   - [ ] Required files present (index.html, main script, README.md)
-   - [ ] Correct import paths and extensions
+   - [ ] Required files present (index.html, .tsx/.ts files, README.md)
+   - [ ] Type definitions in separate files
    - [ ] Page-specific README.md exists and is complete
 
-2. **Build System**
-   - [ ] Main script added to CLIENT_TS_FILES in build.ts
-   - [ ] Correct loaders configured for file type
-   - [ ] Development mode compilation works
-   - [ ] Production build generates correct output
+3. **Type Safety**
+   - [ ] No `any` types used
+   - [ ] Interfaces defined for all data structures
+   - [ ] Proper type annotations on functions
+   - [ ] Generic types used where appropriate
 
-3. **Import Management**
-   - [ ] Shared dependencies in import map
+4. **Import Management**
+   - [ ] Shared dependencies in import map with types
    - [ ] Direct imports used appropriately
    - [ ] No duplicate dependency versions
+   - [ ] Type definitions available for all imports
 
-4. **Documentation**
+5. **Documentation**
+   - [ ] Type definitions documented
    - [ ] Page README.md exists and is complete
    - [ ] Root README.md updated
    - [ ] Build and run instructions accurate
 
-5. **Utils and Testing**
-   - [ ] Shared code properly placed in utils
-   - [ ] Unit tests exist for utilities
+6. **Utils and Testing**
+   - [ ] Shared code properly typed
+   - [ ] Unit tests with type checking
    - [ ] Tests pass and provide good coverage
+   - [ ] Type definitions for test utilities
 
 ## Example Commands
 
 1. **Create New Page**
    ```
-   Ask: "Create a new page application called [name] using [technology]"
-   Example: "Create a new page application called 'canvas-game' using Canvas API"
+   Ask: "Create a new page application called [name] using [technology] with TypeScript"
+   Example: "Create a new page application called 'canvas-game' using Canvas API with TypeScript"
    ```
 
 2. **Validate Structure**
    ```
-   Ask: "Validate the project structure for the [page-name] application"
-   Example: "Validate the project structure for the 'react' application"
+   Ask: "Validate the TypeScript implementation and project structure for the [page-name] application"
+   Example: "Validate the TypeScript implementation for the 'react' application"
    ```
 
-3. **Add Shared Utility**
+## Type Safety Guidelines
+
+1. **Component Props**
+   ```typescript
+   // Bad
+   const Component = (props: any) => { ... }
+
+   // Good
+   interface ComponentProps {
+     title: string;
+     onAction: (id: number) => void;
+     optional?: boolean;
+   }
+   const Component = ({ title, onAction, optional = false }: ComponentProps) => { ... }
    ```
-   Ask: "Create a shared utility for [feature] with unit tests"
-   Example: "Create a shared utility for vector calculations with unit tests"
+
+2. **Event Handlers**
+   ```typescript
+   // Bad
+   const handleClick = (e) => { ... }
+
+   // Good
+   const handleClick = (e: MouseEvent) => { ... }
    ```
 
-## Common Issues and Solutions
+3. **State Management**
+   ```typescript
+   // Bad
+   const [data, setData] = useState();
 
-1. **Development Mode Issues**
-   - Problem: TSX/TS files not compiling
-   - Solution: Check server.ts loaders and file watchers
+   // Good
+   interface DataState {
+     items: string[];
+     loading: boolean;
+   }
+   const [data, setData] = useState<DataState>({ items: [], loading: false });
+   ```
 
-2. **Build Issues**
-   - Problem: Production build failing
-   - Solution: Verify build.ts configuration and file paths
+4. **API Responses**
+   ```typescript
+   // Define response types
+   interface ApiResponse<T> {
+     data: T;
+     status: number;
+     message: string;
+   }
 
-3. **Import Issues**
-   - Problem: Duplicate dependencies
-   - Solution: Move to import map in deno.json
+   // Use with fetch
+   const getData = async <T>(): Promise<ApiResponse<T>> => {
+     const response = await fetch("/api/data");
+     return response.json();
+   };
+   ```
 
-4. **Live Reload Issues**
-   - Problem: Changes not reflecting
-   - Solution: Check file extensions in watcher configuration
-
-## Best Practices
-
-1. **Code Organization**
-   - Keep page-specific code within its directory
-   - Use utils for shared functionality
-   - Maintain clear separation of concerns
-
-2. **Documentation**
-   - Keep READMEs up to date
-   - Document any special requirements
-   - Include examples where helpful
-
-3. **Testing**
-   - Write tests for shared utilities
-   - Consider adding page-specific tests
-   - Maintain test coverage
-
-4. **Dependencies**
-   - Use import maps for shared dependencies
-   - Keep dependencies up to date
-   - Document version requirements
-
-Remember to maintain consistency across all page applications and keep the
-project structure clean and obvious for future development.
+Remember: TypeScript is not optional - all new code must be written in
+TypeScript with proper type definitions and safety checks.

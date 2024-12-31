@@ -138,7 +138,7 @@ export class TarotScene {
     // Initialize Three.js scene
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x1a1a2e);
-    
+
     this.camera = new THREE.PerspectiveCamera(
       75,
       globalThis.innerWidth / globalThis.innerHeight,
@@ -215,7 +215,10 @@ export class TarotScene {
     this.resetScene();
   }
 
-  private createCard(card: TarotCard, position: THREE.Vector3): InteractiveCard {
+  private createCard(
+    card: TarotCard,
+    position: THREE.Vector3,
+  ): InteractiveCard {
     const geometry = new THREE.BoxGeometry(1, 1.5, 0.01);
     const frontMaterial = new THREE.MeshPhongMaterial({
       color: 0x9932CC,
@@ -288,7 +291,7 @@ export class TarotScene {
       if (!card.selected) {
         const isHovered = intersects.length > 0 &&
           intersects[0].object === card.mesh;
-        
+
         // Smooth transition for hover effect
         const targetY = isHovered ? 0.5 : card.originalPosition.y;
         card.mesh.position.y += (targetY - card.mesh.position.y) * 0.1;
@@ -331,16 +334,16 @@ export class TarotScene {
     card.targetPosition = new THREE.Vector3(
       startX + (index * spacing),
       2.5, // Higher position
-      2   // Closer to camera
+      2, // Closer to camera
     );
-    
+
     // Scale up the selected cards
     card.mesh.scale.set(1.5, 1.5, 1.5);
-    
+
     card.targetRotation = new THREE.Euler(
       -0.2, // Tilt forward for better visibility
       Math.PI + (Math.random() > 0.5 ? Math.PI : 0),
-      0
+      0,
     );
 
     this.animateCardToPosition(card);
@@ -405,7 +408,7 @@ export class TarotScene {
       const reading = this.selectedCards.map((card) =>
         `<p><strong>${card.card.name}</strong> ${
           card.targetRotation.y > Math.PI * 1.5 ? "(Reversed)" : ""
-        }: ${card.card.meaning}</p>`,
+        }: ${card.card.meaning}</p>`
       ).join("");
 
       readingResult.innerHTML = reading;

@@ -69,12 +69,23 @@ When creating a new page application, follow these steps:
        └── README.md        # Page-specific documentation
    ```
 
-2. **HTML Template Requirements**
+2. **Root Navigation**
+   - Add link to the new page in root `/index.html`
+   - Use consistent styling with existing links
+   - Add appropriate emoji icon if relevant
+   - Example:
+     ```html
+     <a href="/pages/[page-name]" class="demo-link">
+       [emoji] Page Title
+     </a>
+     ```
+
+3. **HTML Template Requirements**
    - Must include proper meta tags and viewport settings
    - For development mode: Import source TypeScript files directly
    - Live reload script will be injected automatically by the dev server
 
-3. **Deno TypeScript Configuration**
+4. **Deno TypeScript Configuration**
    - Configure TypeScript settings in `deno.json`
    - Set compiler options for Deno environment
    - Example:
@@ -94,7 +105,7 @@ When creating a new page application, follow these steps:
      }
      ```
 
-4. **Import Management**
+5. **Import Management**
    - For single-use external imports: Use direct URL imports with types
    - For shared dependencies: Add to `deno.json` import map
    - Example:
@@ -107,7 +118,7 @@ When creating a new page application, follow these steps:
      }
      ```
 
-5. **Type Definitions**
+6. **Type Definitions**
    - Create separate `types.ts` file for shared types
    - Use TypeScript interfaces over type aliases when possible
    - Export all types with proper documentation
@@ -123,7 +134,7 @@ When creating a new page application, follow these steps:
      export type ActionType = "create" | "update" | "delete";
      ```
 
-6. **Utility Functions**
+7. **Utility Functions**
    - Place shared utilities in `/utils` directory
    - Each utility must have associated unit tests
    - Use proper TypeScript types and generics

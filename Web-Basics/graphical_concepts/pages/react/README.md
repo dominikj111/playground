@@ -1,29 +1,29 @@
-# React Counter Demo
+# Career Development Survey
 
-A simple demonstration of React (Preact) functionality within the Graphical
-Concepts project. This demo showcases:
+Interactive multi-step survey form built with Preact, demonstrating form handling, validation, and state management.
 
-- Basic React component structure
-- State management using hooks (`useState`)
-- Event handling
-- Tailwind CSS styling
+## Features
 
-## Technical Details
+- Three-step survey process:
+  1. Personal Information
+  2. Professional Background
+  3. Career Goals & Preferences
+- Real-time form validation
+- Progress indicator
+- Interactive form elements:
+  - Text inputs
+  - Radio buttons
+  - Checkboxes
+  - Range slider
+  - Multi-select skills
+- Results summary modal
+- Responsive design with clean UI
 
-- Uses Preact 10.25.4 as a lightweight alternative to React
-- Implements a counter with increment/decrement functionality
-- Built and bundled using esbuild
-- Styled using Tailwind CSS
+## How to Use
 
-## File Structure
+1. Fill out personal information (name, email, age, location)
+2. Add professional details (employment status, skills, experience)
+3. Specify career preferences (goals, salary range, work style)
+4. Review your responses in the summary modal
 
-- `index.tsx` - Main React component with counter logic
-- `index.html` - HTML entry point that loads and renders the React component
-
-## How It Works
-
-The demo presents a simple counter interface where users can:
-
-- View the current count
-- Increment the count using the blue button
-- Decrement the count using the red button
+For technical details and setup instructions, see the root README.

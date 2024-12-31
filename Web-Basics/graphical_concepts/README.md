@@ -1,56 +1,55 @@
 # Graphical Concepts Gallery
 
-A collection of interactive graphical demonstrations and experiments built with
-modern web technologies. This project showcases various graphical concepts and
-implementations using TypeScript, Three.js, and other web technologies.
+A collection of interactive graphical demonstrations and experiments built with modern web technologies. This project showcases various graphical concepts and implementations using TypeScript, Three.js, and other web technologies.
 
 ## Projects
 
 ### 🎴 Tarot Card Reading
+An immersive 3D Tarot card reading experience with interactive card drawing and beautiful animations.
 
-An immersive 3D Tarot card reading experience that demonstrates Three.js
-capabilities and interactive 3D graphics in the browser.
+### 🎮 Learning Path Game
+A game-like learning path application with interactive modules and progress tracking.
 
 ### ⚛️ React Counter Demo
-
-A simple React (Preact) demonstration showcasing state management and event
-handling with a clean, modern UI using Tailwind CSS.
+A simple React (Preact) demonstration showcasing state management and modern UI practices.
 
 ## Technology Stack
 
+### Core Technologies
 - **Runtime**: Deno
 - **Languages**: TypeScript, HTML, CSS
 - **3D Graphics**: Three.js
-- **UI Frameworks**: Preact
+- **UI Framework**: Preact 10.25.4
 - **Styling**: Tailwind CSS
-- **Development Server**: Custom Deno server with TypeScript support
+
+### Common Features
+- TypeScript support with type safety
+- Modern component architecture
+- Responsive design
+- Interactive animations
+- Clean, modern UI
 
 ## Getting Started
 
-1. Make sure you have [Deno](https://deno.land/) installed
+1. Install [Deno](https://deno.land/)
 2. Clone this repository
 3. Run the development server:
    ```bash
    deno task dev
    ```
-4. Open your browser and navigate to `http://localhost:8000`
-
-## Development
-
-The project uses a custom Deno server that handles:
-
-- Static file serving
-- TypeScript compilation on-the-fly
-- Live reloading during development
+4. Open `http://localhost:8000`
 
 ## Project Structure
 
 - `/pages` - Individual project implementations
-  - `/tarot` - 3D Tarot card reading experience
-  - `/react` - Simple React counter demonstration
-- `/utils` - Utility functions and helpers
-- `server.ts` - Development server implementation
-- `build.ts` - Build script for production deployment
-- `prod_server.ts` - Production server implementation
-- `deno.json` - Deno configuration and import maps
-- `index.html` - Main application entry point
+  - `/tarot` - 3D Tarot card experience
+  - `/learning-path` - Interactive learning game
+  - `/react` - React counter demo
+- `/utils` - Shared utilities and helpers
+
+## Development
+
+The project uses a custom Deno server providing:
+- Static file serving
+- TypeScript compilation
+- Live reloading

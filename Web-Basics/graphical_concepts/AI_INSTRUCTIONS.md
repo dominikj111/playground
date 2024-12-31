@@ -1,6 +1,7 @@
 # AI Instructions for Graphical Concepts Project
 
-This document provides instructions for AI assistants to help maintain and extend the project structure consistently.
+This document provides instructions for AI assistants to help maintain and
+extend the project structure consistently.
 
 ## Creating a New Page Application
 
@@ -145,4 +146,5 @@ Use this checklist to verify project structure integrity:
    - Keep dependencies up to date
    - Document version requirements
 
-Remember to maintain consistency across all page applications and keep the project structure clean and obvious for future development.
+Remember to maintain consistency across all page applications and keep the
+project structure clean and obvious for future development.

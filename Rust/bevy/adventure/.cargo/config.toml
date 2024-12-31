@@ -1,0 +1,18 @@
+[target.x86_64-unknown-linux-gnu]
+rustflags = [
+  # (Nightly) Make the current crate share its generic instantiations
+  "-Zshare-generics=y",
+]
+
+[target.x86_64-apple-darwin]
+rustflags = [
+    "-Zshare-generics=y",
+]
+
+[target.aarch64-apple-darwin]
+rustflags = [
+    "-Zshare-generics=y",
+]
+
+[env]
+CARGO_INCREMENTAL = "1"

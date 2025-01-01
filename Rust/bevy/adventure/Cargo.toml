@@ -1,12 +1,15 @@
-[package]
-name = "adventure"
-version = "0.1.0"
-edition = "2021"
+[workspace]
+resolver = "2"
+members = [
+    "common",
+    "apps/core_world",
+    "apps/camera_system",
+    # "apps/prism_character",
+    "entrypoint"
+]
 
-[dependencies]
-bevy = { version = "0.15.0", features = [
-    "dynamic_linking", # Faster compilation times during development
-] }
+[workspace.dependencies]
+bevy = { version = "0.15.0", features = ["dynamic_linking"] }
 
 # Enable a small amount of optimization in the dev profile.
 [profile.dev]
@@ -18,12 +21,12 @@ opt-level = 3
 
 # Enable more optimization in the release profile at the cost of compile time.
 [profile.release]
-opt-level = 3     # Maximum optimization
-lto = "thin"      # Enable Link Time Optimization (thin is a good balance)
 codegen-units = 1 # Maximum size reduction optimizations
-strip = true      # Strip debug symbols
+lto = "thin"      # Enable Link Time Optimization (thin is a good balance)
+
+opt-level = 3     # Maximum optimization
+strip = true      # Remove debug symbols
 panic = "abort"   # Remove panic unwinding code
-debug = false     # No debug symbols
 
 # Optimize for size in the wasm-release profile to reduce load times and bandwidth usage on web.
 [profile.wasm-release]

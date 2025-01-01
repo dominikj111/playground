@@ -129,6 +129,12 @@ The game aims to create a meditative, engaging experience where players can:
 - `bevy_rapier3d` - Physics engine for 3D collision detection and rigid body dynamics
 - `bevy_atmosphere` - Atmospheric and lighting effects
 - `rodio` - Minimal audio handling
+- `deno_core` - Scripting engine for level and gameplay scripting
+
+### Game Mode
+- Single-player campaign only
+- No network/multiplayer functionality
+- Built-in level editor with scripting capabilities (using deno_core or lua)
 
 ### Module Structure
 1. **Core Game State**

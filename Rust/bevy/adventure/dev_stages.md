@@ -84,6 +84,8 @@
 - Character evolution
 - Time manipulation
 - Advanced physics interactions
+- Level editor implementation
+- Scripting system integration (deno_core/lua)
 
 ### Stage 4: Content and Polish
 - Level design

@@ -1,6 +1,6 @@
-import { MenuItem } from "../types.ts";
+import { MenuItem, MenuStyle } from "../types.ts";
 
-export class WindowsMenuBar extends HTMLElement {
+export class ModernMenuBar extends HTMLElement {
     private menuItems: MenuItem[] = [];
     private menuContainer: HTMLElement;
     private overflowButton: HTMLElement | null = null;
@@ -50,12 +50,18 @@ export class WindowsMenuBar extends HTMLElement {
             
             .submenu {
                 display: none;
-                position: fixed;
+                position: absolute;
                 background-color: #f0f0f0;
                 border: 1px solid #d1d1d1;
                 box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
                 z-index: 1000;
                 min-width: 150px;
+            }
+            
+            .menu-item > .submenu {
+                position: fixed;
+                top: 100%;
+                left: 0;
             }
             
             .submenu-item {
@@ -69,46 +75,34 @@ export class WindowsMenuBar extends HTMLElement {
                 background-color: #e5e5e5;
             }
             
-            .overflow-button {
-                display: none;
-                padding: 2px 8px;
-                cursor: default;
-                margin-left: auto;
-                position: relative;
+            .submenu-item > .submenu {
+                position: absolute;
+                top: 0;
+                left: 100%;
             }
             
-            .overflow-button:hover {
-                background-color: #e5e5e5;
-            }
-            
-            .overflow-button .submenu {
+            .overflow-button > .submenu {
                 position: fixed;
                 top: 100%;
                 right: 0;
-                left: auto;
             }
             
-            .submenu-item .submenu {
-                position: absolute;
-                top: 0;
-                left: -100%;
-                margin-left: -2px;
+            .has-submenu::after {
+                content: '▼';
+                font-size: 0.8em;
+                margin-left: 5px;
             }
             
-            .submenu .submenu {
-                position: fixed;
-                left: auto;
-                right: 100%;
-                top: 0;
+            .submenu .has-submenu::after {
+                content: '►';
             }
             
-            .menu-item.active {
-                background-color: #e5e5e5;
-            }
-            
-            .menu-item.active .submenu,
-            .overflow-button.active .submenu {
+            .active > .submenu {
                 display: block;
+            }
+            
+            .active {
+                background-color: #e5e5e5;
             }
             
             .hidden {
@@ -142,6 +136,7 @@ export class WindowsMenuBar extends HTMLElement {
         menuItem.textContent = item.label;
         
         if (item.items && item.items.length > 0) {
+            menuItem.classList.add('has-submenu');
             const submenu = document.createElement('div');
             submenu.className = 'submenu';
             
@@ -150,7 +145,34 @@ export class WindowsMenuBar extends HTMLElement {
                 submenuItem.className = 'submenu-item';
                 submenuItem.textContent = subItem.label;
                 
-                if (subItem.action) {
+                if (subItem.items && subItem.items.length > 0) {
+                    submenuItem.classList.add('has-submenu');
+                    const nestedSubmenu = document.createElement('div');
+                    nestedSubmenu.className = 'submenu';
+                    
+                    subItem.items.forEach(nestedItem => {
+                        const nestedMenuItem = document.createElement('div');
+                        nestedMenuItem.className = 'submenu-item';
+                        nestedMenuItem.textContent = nestedItem.label;
+                        
+                        if (nestedItem.action) {
+                            nestedMenuItem.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                nestedItem.action?.();
+                                this.closeAllMenus();
+                            });
+                        }
+                        
+                        nestedSubmenu.appendChild(nestedMenuItem);
+                    });
+                    
+                    submenuItem.appendChild(nestedSubmenu);
+                    submenuItem.addEventListener('mouseenter', () => {
+                        const activeItems = this.shadowRoot?.querySelectorAll('.submenu-item.active');
+                        activeItems?.forEach(item => item.classList.remove('active'));
+                        submenuItem.classList.add('active');
+                    });
+                } else if (subItem.action) {
                     submenuItem.addEventListener('click', (e) => {
                         e.stopPropagation();
                         subItem.action?.();
@@ -162,13 +184,15 @@ export class WindowsMenuBar extends HTMLElement {
             });
             
             menuItem.appendChild(submenu);
-            
             menuItem.addEventListener('click', (e) => {
                 e.stopPropagation();
+                const wasActive = menuItem.classList.contains('active');
                 this.closeAllMenus();
-                menuItem.classList.add('active');
-                this.activeSubmenu = submenu;
-                this.positionSubmenu(menuItem, submenu);
+                if (!wasActive) {
+                    menuItem.classList.add('active');
+                    const rect = menuItem.getBoundingClientRect();
+                    submenu.style.left = `${rect.left}px`;
+                }
             });
         } else if (item.action) {
             menuItem.addEventListener('click', (e) => {
@@ -181,67 +205,28 @@ export class WindowsMenuBar extends HTMLElement {
         return menuItem;
     }
     
-    private positionSubmenu(menuItem: HTMLElement, submenu: HTMLElement): void {
-        const menuItemRect = menuItem.getBoundingClientRect();
-        const submenuRect = submenu.getBoundingClientRect();
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        // Initial position below the menu item
-        let top = menuItemRect.bottom;
-        let left = menuItemRect.left;
-
-        // Check if submenu would go off the right edge
-        if (left + submenuRect.width > viewportWidth) {
-            left = viewportWidth - submenuRect.width - 5;
-        }
-
-        // Check if submenu would go off the bottom edge
-        if (top + submenuRect.height > viewportHeight) {
-            top = menuItemRect.top - submenuRect.height;
-        }
-
-        submenu.style.top = `${top}px`;
-        submenu.style.left = `${left}px`;
-    }
-    
-    private closeAllMenus(): void {
-        this.shadowRoot?.querySelectorAll('.menu-item.active, .overflow-button.active').forEach(item => {
-            item.classList.remove('active');
-        });
-        if (this.activeSubmenu) {
-            this.activeSubmenu.style.display = 'none';
-            this.activeSubmenu = null;
-        }
-    }
-    
     private handleResize(): void {
         const containerWidth = this.menuContainer.offsetWidth;
         let currentWidth = 0;
         this.hiddenItems = [];
-        const visibleItems: HTMLElement[] = [];
         
-        // Get all menu items except the overflow button
         const menuItems = Array.from(this.menuContainer.querySelectorAll('.menu-item')).filter(
             item => !item.classList.contains('overflow-button')
         ) as HTMLElement[];
         
-        // Calculate which items need to be hidden
         menuItems.forEach((menuItem, index) => {
             if (menuItem === this.overflowButton) return;
             
             const itemWidth = menuItem.offsetWidth;
-            if (currentWidth + itemWidth > containerWidth - 40) { // Leave space for overflow button
+            if (currentWidth + itemWidth > containerWidth - 40) {
                 menuItem.classList.add('hidden');
                 this.hiddenItems.push(this.menuItems[index]);
             } else {
                 menuItem.classList.remove('hidden');
-                visibleItems.push(menuItem);
                 currentWidth += itemWidth;
             }
         });
         
-        // Show/hide overflow button
         if (this.hiddenItems.length > 0) {
             if (!this.overflowButton) {
                 this.overflowButton = document.createElement('div');
@@ -254,75 +239,36 @@ export class WindowsMenuBar extends HTMLElement {
                 
                 this.overflowButton.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    const wasActive = this.overflowButton?.classList.contains('active');
                     this.closeAllMenus();
-                    this.overflowButton?.classList.add('active');
-                    if (submenu) {
-                        this.activeSubmenu = submenu;
-                        const buttonRect = this.overflowButton!.getBoundingClientRect();
-                        submenu.style.top = `${buttonRect.bottom}px`;
-                        submenu.style.right = `${window.innerWidth - buttonRect.right}px`;
-                        submenu.style.display = 'block';
+                    if (!wasActive) {
+                        this.overflowButton?.classList.add('active');
                     }
                 });
                 
                 this.menuContainer.appendChild(this.overflowButton);
             }
             
-            // Update overflow menu items
+            this.overflowButton.style.display = 'block';
             const submenu = this.overflowButton.querySelector('.submenu');
             if (submenu) {
                 submenu.innerHTML = '';
                 this.hiddenItems.forEach(item => {
-                    const submenuItem = document.createElement('div');
-                    submenuItem.className = 'submenu-item';
-                    submenuItem.style.position = 'relative';
-                    submenuItem.innerHTML = `${item.label} ◄`;
-                    
-                    if (item.items && item.items.length > 0) {
-                        const nestedSubmenu = document.createElement('div');
-                        nestedSubmenu.className = 'submenu';
-                        nestedSubmenu.style.position = 'absolute';
-                        
-                        item.items.forEach(subItem => {
-                            const nestedItem = document.createElement('div');
-                            nestedItem.className = 'submenu-item';
-                            nestedItem.textContent = subItem.label;
-                            
-                            if (subItem.action) {
-                                nestedItem.addEventListener('click', (e) => {
-                                    e.stopPropagation();
-                                    subItem.action?.();
-                                    this.closeAllMenus();
-                                });
-                            }
-                            
-                            nestedSubmenu.appendChild(nestedItem);
-                        });
-                        
-                        submenuItem.appendChild(nestedSubmenu);
-                        submenuItem.addEventListener('mouseenter', () => {
-                            nestedSubmenu.style.display = 'block';
-                        });
-                        
-                        submenuItem.addEventListener('mouseleave', () => {
-                            nestedSubmenu.style.display = 'none';
-                        });
-                    } else if (item.action) {
-                        submenuItem.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            item.action?.();
-                            this.closeAllMenus();
-                        });
-                    }
-                    
-                    submenu.appendChild(submenuItem);
+                    const menuItem = this.createMenuItem(item);
+                    menuItem.classList.remove('menu-item');
+                    menuItem.classList.add('submenu-item');
+                    submenu.appendChild(menuItem);
                 });
             }
-            
-            this.overflowButton.style.display = 'block';
         } else if (this.overflowButton) {
             this.overflowButton.style.display = 'none';
         }
+    }
+    
+    private closeAllMenus(): void {
+        this.shadowRoot?.querySelectorAll('.active').forEach(item => {
+            item.classList.remove('active');
+        });
     }
     
     setMenuItems(items: MenuItem[]): void {
@@ -339,4 +285,4 @@ export class WindowsMenuBar extends HTMLElement {
     }
 }
 
-customElements.define('windows-menu-bar', WindowsMenuBar);
+customElements.define('modern-menu-bar', ModernMenuBar);

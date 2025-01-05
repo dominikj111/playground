@@ -4,77 +4,86 @@
 
 An interactive web application that visualizes a person's aura based on:
 
-1. A 20-question personality survey
+1. A 3-question personality survey about emotional state, energy type, and life purpose
 2. Webcam image analysis of the person's colors and lighting
-3. Optional personal photo upload for aura visualization
+3. Emoji-based mood selection
+4. Optional personal photo upload for aura visualization
 
-The application combines psychological insights from the survey with visual data
-analysis to generate a multi-layered aura visualization around the person's
-image.
+The application combines user input from the survey and mood selection with visual data
+analysis to generate a multi-layered aura visualization around a human silhouette.
 
-## Technical Goals
+## Current Features
 
-- [ ] Create framework-agnostic core modules:
-  - [ ] Camera capture and image processing module
-  - [ ] Color analysis engine
-  - [ ] Aura visualization renderer
-  - [ ] Survey data processing and scoring system
-- [ ] Implement UI components:
-  - [ ] Survey interface using Preact
-  - [ ] Camera/image upload controls
-  - [ ] Aura visualization display
-- [ ] Build adapter interfaces for core functionality to be
-      framework-independent
+### Core Modules
+- [x] Camera capture and image processing
+  - Webcam access and control
+  - Image capture functionality
+  - File upload support
+- [x] Color analysis engine
+  - Basic color mapping
+  - Color-to-aura translation
+- [x] Aura visualization renderer
+  - Multi-layer aura visualization
+  - Human silhouette integration
+  - Mood-based glow effects
+- [x] Survey system
+  - 3 key questions about personality
+  - Emoji-based mood selection
+  - Basic answer processing
+
+### UI Components
+- [x] Survey interface (Preact)
+  - Question display and answer collection
+  - Emoji mood selector
+  - Interactive option selection
+- [x] Camera controls
+  - Start/stop webcam
+  - Capture image
+  - Upload image file
+- [x] Aura visualization display
+  - Real-time updates
+  - Multi-layer rendering
+  - Mood-based effects
 
 ## Dependencies
 
 Core (Vanilla):
-
 - Media Capture and Streams API for webcam access
 - Canvas API for image processing and visualization
 - File API for image uploads
 
 UI Layer:
-
 - Preact for survey interface
-- CSS Animations for aura effects
+- SVG for human silhouette
 
-## Development Notes
+## Technical Implementation
 
-### Implementation Considerations
+### Core Architecture
+1. Framework-agnostic core modules:
+   - `camera.js`: Handles webcam and file input
+   - `colorAnalysis.js`: Processes image colors
+   - `aura.js`: Manages visualization
+   - `survey.tsx`: Handles user input
 
-- Core functionality should be framework-agnostic
-- Survey questions should be carefully crafted to map to specific aura
-  characteristics
-- Color analysis should account for ambient lighting conditions
-- Aura visualization should be smooth and visually appealing
+### Features in Development
+- Expanding survey to include more questions
+- Adding smooth transitions and animations
+- Improving color analysis accuracy
+- Enhancing visual effects
 
-### Technical Approach
+### Known Limitations
+- Basic color analysis without ambient light compensation
+- Limited number of survey questions
+- Simple aura layer transitions
 
-1. Develop core modules in vanilla JavaScript:
-   - Camera/image processing module using navigator.mediaDevices.getUserMedia
-   - Color analysis algorithms using Canvas API
-   - Aura visualization engine
-   - Survey data processing system
-2. Create clean interfaces for core functionality
-3. Implement Preact-based survey UI
-4. Design layered visualization system using CSS animations
-5. Implement responsive UI with progressive enhancement
-6. In case of doubt, implement the feature in very basic, so the application
-   will not stuck and we may develop it later
+## Resources
+- [Media Capture and Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Media_Capture_and_Streams_API)
+- [Color theory documentation reference](https://en.wikipedia.org/wiki/Color_theory)
+- [Aura interpretation and color psychology](https://en.wikipedia.org/wiki/Aura_(psychology))
 
-### Challenges
-
-- Accurate color analysis under varying lighting conditions
-- Creating meaningful correlations between survey answers and aura
-  characteristics
-- Maintaining clean separation between core logic and UI components
-
-### Resources Recommendation
-
-- link to
-  [Media Capture and Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Media_Capture_and_Streams_API)
-- link to
-  [followed color theory documentation reference](https://en.wikipedia.org/wiki/Color_theory)
-- link to
-  [followed research on aura interpretation and color psychology](https://en.wikipedia.org/wiki/Aura_(psychology))
+## Future Enhancements
+- Expand to 20-question personality survey
+- Add ambient light compensation
+- Implement smooth CSS animations
+- Improve aura visualization effects
+- Add comprehensive scoring system

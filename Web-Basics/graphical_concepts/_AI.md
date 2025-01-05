@@ -5,21 +5,7 @@ extend the project structure consistently.
 
 ## Commands
 
-1. `init: <page-name>`
-   - Do not change the root's README.md
-   - Creates a new page application structure in `pages/<page-name>` if it does
-     not exist
-   - If the README.md already exists, do not change it unless directly requested
-   - Generates required files according to the project structure
-   - Adds navigation link to root index.html
-   - if not specified, prefer vanilla approach (no dependencies and no
-     frameworks)
-   - in case the library/framework may significantly reduce the amont of
-     code/work, suggest to use it and wait for response
-   - security is not a priority, so do not inlcude it into any specifications
-   - responsiveness is not a priority, but good to have
-
-2. `propose: <page-name>; <brief-description>`
+1. `propose: <page-name>; <brief-description>`
    - Do not change the root's README.md
    - Creates a new page application structure in `pages/<page-name>`, if it does
      not exist; report an issue if it does and do not proceed
@@ -32,21 +18,30 @@ extend the project structure consistently.
    - if the <page-name> is empty and <brief-description> is empty, scan all
      projects and generate own page name and description/README.md
 
-3. `sense: <page-name>`
+2. `sense: <page-name>`
    - Do not change any page application file
    - Confirm that the README.md file does make sense
    - Start discussion if you think it may be improved or something may be added
 
-4. `implement: <page-name>; <brief-feature-description>`
+3. `implement: <page-name>; <brief-feature-description>`
+   - <page-name> cannot be empty
    - Do not change the root's README.md
-   - Do not change README.md unless directly requested
-   - There must be existing page application structure in `pages/<page-name>`,
-     if not use `init page <page-name>`
-   - According to provided brief feature description, implement the feature
-   - Find a corresponding feature name
-   - Add the feature to the README file
+   - Do not change page's README.md unless directly requested
+   - If the <brief-feature-description> is empty, generate new page project
+     according to the `pages/<page-name>/README.md` following the page structure
+     below
+   - If the <brief-feature-description> is not empty, provide new feature for
+     the <page-name> and edit the `pages/<page-name>/README.md` accordingly
+     (find a corresponding feature name)
+   - Adds navigation link to root index.html if it does not exist
+   - If not specified, prefer vanilla approach (no dependencies and no
+     frameworks)
+   - In case the library/framework may significantly reduce the amont of
+     code/work, suggest to use it and wait for response
+   - Security is not a priority, so do not include it
+   - Responsiveness is not a priority, but good to have
 
-5. `validate: <page-name>`
+4. `validate: <page-name>`
    - Do not change the root's README.md
    - Do not change the page application structure nor any related file unless
      requested

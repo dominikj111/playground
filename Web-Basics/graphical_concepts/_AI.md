@@ -32,7 +32,12 @@ extend the project structure consistently.
    - if the <page-name> is empty and <brief-description> is empty, scan all
      projects and generate own page name and description/README.md
 
-3. `implement: <page-name>; <brief-feature-description>`
+3. `sense: <page-name>`
+   - Do not change any page application file
+   - Confirm that the README.md file does make sense
+   - Start discussion if you think it may be improved or something may be added
+
+4. `implement: <page-name>; <brief-feature-description>`
    - Do not change the root's README.md
    - Do not change README.md unless directly requested
    - There must be existing page application structure in `pages/<page-name>`,
@@ -41,7 +46,7 @@ extend the project structure consistently.
    - Find a corresponding feature name
    - Add the feature to the README file
 
-4. `validate: <page-name>`
+5. `validate: <page-name>`
    - Do not change the root's README.md
    - Do not change the page application structure nor any related file unless
      requested

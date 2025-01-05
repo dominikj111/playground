@@ -15,6 +15,8 @@ extend the project structure consistently.
      frameworks)
    - in case the library/framework may significantly reduce the amont of
      code/work, suggest to use it and wait for response
+   - security is not a priority, so do not inlcude it into any specifications
+   - responsiveness is not a priority, but good to have
 
 2. `propose: <page-name>; <brief-description>`
    - Do not change the root's README.md

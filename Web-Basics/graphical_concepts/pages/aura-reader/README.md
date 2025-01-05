@@ -60,6 +60,8 @@ UI Layer:
 3. Implement Preact-based survey UI
 4. Design layered visualization system using CSS animations
 5. Implement responsive UI with progressive enhancement
+6. In case of doubt, implement the feature in very basic, so the application
+   will not stuck and we may develop it later
 
 ### Challenges
 

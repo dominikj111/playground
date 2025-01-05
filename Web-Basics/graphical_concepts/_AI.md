@@ -9,6 +9,7 @@ extend the project structure consistently.
    - Do not change the root's README.md
    - Creates a new page application structure in `pages/<page-name>` if it does
      not exist
+   - If the README.md already exists, do not change it unless directly requested
    - Generates required files according to the project structure
    - Adds navigation link to root index.html
    - if not specified, prefer vanilla approach (no dependencies and no
@@ -20,7 +21,8 @@ extend the project structure consistently.
 
 2. `propose: <page-name>; <brief-description>`
    - Do not change the root's README.md
-   - Creates a new page application structure in `pages/<page-name>`
+   - Creates a new page application structure in `pages/<page-name>`, if it does
+     not exist; report an issue if it does and do not proceed
    - Creates a README.md for the specified page by following the README Template
      structure and by following the provided brief description
    - if the <page-name> is empty, generate own page name according to the
@@ -32,6 +34,7 @@ extend the project structure consistently.
 
 3. `implement: <page-name>; <brief-feature-description>`
    - Do not change the root's README.md
+   - Do not change README.md unless directly requested
    - There must be existing page application structure in `pages/<page-name>`,
      if not use `init page <page-name>`
    - According to provided brief feature description, implement the feature
@@ -40,6 +43,8 @@ extend the project structure consistently.
 
 4. `validate: <page-name>`
    - Do not change the root's README.md
+   - Do not change the page application structure nor any related file unless
+     requested
    - If the <page-name> is empty, check all pages
    - Report an issue if any of next steps are missing
    - Page application structure exists in `pages/<page-name>` (README.md only

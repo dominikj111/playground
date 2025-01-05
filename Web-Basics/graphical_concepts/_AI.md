@@ -11,14 +11,24 @@ extend the project structure consistently.
      not exist
    - Generates required files according to the project structure
    - Adds navigation link to root index.html
+   - if not specified, prefer vanilla approach (no dependencies and no
+     frameworks)
+   - in case the library/framework may significantly reduce the amont of
+     code/work, suggest to use it and wait for response
 
-2. `propose: <page-name>`
+2. `propose: <page-name>; <brief-description>`
    - Do not change the root's README.md
    - Creates a new page application structure in `pages/<page-name>`
    - Creates a README.md for the specified page by following the README Template
-     structure
+     structure and by following the provided brief description
+   - if the <page-name> is empty, generate own page name according to the
+     description/README.md
+   - if the <brief-description> is empty, generate own description to match the
+     <page-name> as much as possible
+   - if the <page-name> is empty and <brief-description> is empty, scan all
+     projects and generate own page name and description/README.md
 
-3. `implement: <page-name> <brief-feature-description>`
+3. `implement: <page-name>; <brief-feature-description>`
    - Do not change the root's README.md
    - There must be existing page application structure in `pages/<page-name>`,
      if not use `init page <page-name>`

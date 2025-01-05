@@ -11,17 +11,18 @@ extend the project structure consistently.
      not exist; report an issue if it does and do not proceed
    - Creates a README.md for the specified page by following the README Template
      structure and by following the provided brief description
-   - if the <page-name> is empty, generate own page name according to the
+   - If the <page-name> is empty, generate own page name according to the
      description/README.md
-   - if the <brief-description> is empty, generate own description to match the
+   - If the <brief-description> is empty, generate own description to match the
      <page-name> as much as possible
-   - if the <page-name> is empty and <brief-description> is empty, scan all
+   - If the <page-name> is empty and <brief-description> is empty, scan all
      projects and generate own page name and description/README.md
 
 2. `sense: <page-name>`
    - Do not change any page application file
    - Confirm that the README.md file does make sense
-   - Start discussion if you think it may be improved or something may be added
+   - Review the current implementation if there is any and confirm it matches the README.md file
+   - Start discussion if you think it may be improved, something may be added or in case there is missing implementation
 
 3. `implement: <page-name>; <brief-feature-description>`
    - <page-name> cannot be empty

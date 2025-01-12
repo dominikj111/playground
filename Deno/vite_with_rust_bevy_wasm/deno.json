@@ -1,0 +1,19 @@
+{
+  "tasks": {
+    "dev": "deno run -A --node-modules-dir npm:vite",
+    "build": "deno run -A --node-modules-dir npm:vite build",
+    "preview": "deno run -A --node-modules-dir npm:vite preview",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/",
+    "build-hello-wasm": "(cd hello-wasm && wasm-pack build --target web) && cp hello-wasm/pkg/hello_wasm_bg.wasm public",
+    "build-hello-3d-shapes-wasm": "(cd hello-3d-shapes-wasm && cargo build --release --target wasm32-unknown-unknown && wasm-bindgen --out-dir ./pkg/ --target web ./target/wasm32-unknown-unknown/release/hello_3d_shapes.wasm) && cp hello-3d-shapes-wasm/pkg/hello_3d_shapes_bg.wasm public"
+  },
+  "compilerOptions": {
+    "lib": ["ES2020", "DOM", "DOM.Iterable"]
+  },
+  "imports": {
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
+    "vite": "npm:vite@^5.4.9",
+    "@hello-wasm/": "./hello-wasm/",
+    "@hello-3d-shapes-wasm/": "./hello-3d-shapes-wasm/"
+  }
+}

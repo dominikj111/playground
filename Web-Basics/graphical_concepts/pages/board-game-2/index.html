@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Game Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2aafab;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            gap: 5px;
+            background-color: #2aafab;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tile {
+            width: 60px;
+            height: 60px;
+            background-color: #e0f8f7;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .tile.start {
+            background-color: #3cc480;
+            font-weight: bold;
+            color: white;
+        }
+
+        .tile.end {
+            background-color: #f4b400;
+            font-weight: bold;
+            color: white;
+        }
+
+        .tile.warning {
+            background-color: #ffcc00;
+        }
+
+        .tree {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #4caf50;
+            border-radius: 50%;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tree::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 10px;
+            background-color: #795548;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="board">
+        <div class="tile start">START</div>
+        <div class="tile"></div>
+        <div class="tile warning"></div>
+        <div class="tile tree"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile warning"></div>
+        <div class="tile"></div>
+
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile tree"></div>
+        <div class="tile"></div>
+        <div class="tile warning"></div>
+        <div class="tile"></div>
+        <div class="tile"></div>
+        <div class="tile tree"></div>
+
+        <div class="tile"></div>
+        <div class="tile warning"></div>
+        <div class="tile"></div>
+        <div class="tile tree"></div>
+        <div class="tile"></div>
+        <div class="tile warning"></div>
+        <div class="tile"></div>
+        <div class="tile end">END</div>
+    </div>
+</body>
+</html>

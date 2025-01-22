@@ -1,8 +1,0 @@
-[package]
-name = "desktop_pet_test1"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-desktop_pet_shared = { path = "../../shared" }
-desktop_pet_engine = { path = "../../engine" }

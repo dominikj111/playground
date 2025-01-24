@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5 in a Row Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            gap: 1px;
+            background-color: white;
+            padding: 2px;
+            border-radius: 3px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .controls {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h2>5 in a Row Game</h2>
+        <div class="controls">
+            <select id="player-colors">
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+            </select>
+            <button onclick="resetGame()">Reset Game</button>
+        </div>
+        <div id="board"></div>
+    </div>
+
+    <script>
+        const colors = {
+            'red': 'rgb(255, 107, 57)',
+            'blue': 'rgb(74, 68, 193)'
+        };
+
+        let board = Array(5).fill().map(() => Array(5).fill(null));
+        let currentPlayer = 'red';
+        let gameActive = true;
+        const cells = [];
+
+        function initializeBoard() {
+            const boardElement = document.getElementById('board');
+            boardElement.innerHTML = ''; // Clear the board first
+            
+            // Create all 25 cells upfront
+            for (let y = 0; y < 5; y++) {
+                for (let x = 0; x < 5; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    cell.addEventListener('click', handleClick);
+                    cells.push(cell);
+                    boardElement.appendChild(cell);
+                }
+            }
+        }
+
+        function handleClick(e) {
+            if (!gameActive) return;
+            
+            const cell = e.target;
+            const x = parseInt(cell.dataset.x);
+            const y = parseInt(cell.dataset.y);
+            
+            if (board[y][x] !== null) return;
+            
+            placePiece(x, y);
+            
+            if (checkWin(y, x)) {
+                gameOver();
+                return;
+            }
+            
+            if (checkDraw()) {
+                alert("It's a draw!");
+                gameActive = false;
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'red' ? 'blue' : 'red';
+        }
+
+        function placePiece(x, y) {
+            board[y][x] = currentPlayer;
+            const index = y * 5 + x;
+            cells[index].style.backgroundColor = colors[currentPlayer];
+        }
+
+        function checkWin(y, x) {
+            const directions = [
+                [[0, 1], [0, -1]], // horizontal
+                [[1, 0], [-1, 0]], // vertical
+                [[1, 1], [-1, -1]], // diagonal
+                [[1, -1], [-1, 1]] // anti-diagonal
+            ];
+
+            for (const [dir1, dir2] of directions) {
+                let count = 1;
+                
+                // Check in first direction
+                let ny = y + dir1[0];
+                let nx = x + dir1[1];
+                while (ny >= 0 && ny < 5 && nx >= 0 && nx < 5 && board[ny][nx] === currentPlayer) {
+                    count++;
+                    ny += dir1[0];
+                    nx += dir1[1];
+                }
+                
+                // Check in opposite direction
+                ny = y + dir2[0];
+                nx = x + dir2[1];
+                while (ny >= 0 && ny < 5 && nx >= 0 && nx < 5 && board[ny][nx] === currentPlayer) {
+                    count++;
+                    ny += dir2[0];
+                    nx += dir2[1];
+                }
+
+                if (count >= 5) return true;
+            }
+            return false;
+        }
+
+        function checkDraw() {
+            return board.every(row => row.every(cell => cell !== null));
+        }
+
+        function gameOver() {
+            gameActive = false;
+            alert(`Player ${currentPlayer} wins!`);
+        }
+
+        function resetGame() {
+            board = Array(5).fill().map(() => Array(5).fill(null));
+            currentPlayer = 'red';
+            gameActive = true;
+            cells.forEach(cell => {
+                cell.style.backgroundColor = '';
+            });
+        }
+
+        // Initialize the game
+        initializeBoard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "name": "react_safari_10",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@eslint/js": "^9.21.0",
+    "@rsbuild/core": "^1.2.11",
+    "@rsbuild/plugin-react": "^1.1.1",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1"
+  },
+  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
+}

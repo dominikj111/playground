@@ -1,9 +1,0 @@
-[workspace]
-resolver = "2"
-members = [
-    "common",
-    "apps/bloom_2d",
-    "apps/hello_shapes",
-    "apps/mesh_2d",
-    "entrypoint",
-]

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}API Documentation - Django REST API{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🚀 Welcome to Django REST API</h2>
+    <p>This project demonstrates Django REST Framework best practices with JWT authentication.</p>
+    <p>Your background: <strong>PHP, ColdFusion, TypeScript/Express</strong> - this will feel familiar!</p>
+</div>
+
+<div class="card">
+    <h2>🔐 Authentication Endpoints</h2>
+    <p>Get your JWT token to access protected endpoints:</p>
+    <div class="endpoint-list">
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/token/</span>
+            <span class="description">Login - Get access & refresh tokens</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/token/refresh/</span>
+            <span class="description">Refresh access token</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/register/</span>
+            <span class="description">Register new user (public)</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>👥 User Management (ViewSet)</h2>
+    <p>RESTful CRUD operations using ViewSets (like Laravel Resource Controllers):</p>
+    <div class="endpoint-list">
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/users/</span>
+            <span class="description">List all users (requires auth)</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/users/{id}/</span>
+            <span class="description">Get specific user</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/users/me/</span>
+            <span class="description">Get current user (custom action)</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/users/</span>
+            <span class="description">Create user</span>
+        </div>
+        <div class="endpoint">
+            <span class="method put">PUT</span>
+            <span class="path">/api/users/{id}/</span>
+            <span class="description">Update user</span>
+        </div>
+        <div class="endpoint">
+            <span class="method delete">DELETE</span>
+            <span class="path">/api/users/{id}/</span>
+            <span class="description">Delete user</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🔧 Utility Endpoints</h2>
+    <div class="endpoint-list">
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/public/</span>
+            <span class="description">Public endpoint (no auth required)</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/protected/</span>
+            <span class="description">Protected endpoint (requires JWT)</span>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="path">/api/health/</span>
+            <span class="description">Health check</span>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="path">/api/echo/</span>
+            <span class="description">Echo back your request</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📝 Quick Start</h2>
+    <p><strong>1. Register a user:</strong></p>
+    <code>POST /api/register/</code> with <code>{"username": "user", "email": "user@example.com", "password": "securepass123", "password_confirm": "securepass123"}</code>
+    
+    <p style="margin-top: 1rem;"><strong>2. Get JWT token:</strong></p>
+    <code>POST /api/token/</code> with <code>{"username": "user", "password": "securepass123"}</code>
+    
+    <p style="margin-top: 1rem;"><strong>3. Use the token:</strong></p>
+    <code>Authorization: Bearer {your_access_token}</code>
+</div>
+
+<div class="card">
+    <h2>🛠️ Tools</h2>
+    <a href="/admin/" class="btn">Django Admin</a>
+    <a href="/api/" class="btn">Browsable API</a>
+</div>
+
+{% if user.is_authenticated %}
+<div class="card">
+    <h2>👤 Current User</h2>
+    <p>Logged in as: <strong>{{ user.username }}</strong></p>
+    <p>Email: {{ user.email }}</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{
+  "name": "mainapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"{js,mainapp,adminapp}/**/*.{js,ts,tsx}\"",
+    "format": "prettier --write \"{js,mainapp,adminapp}/**/*.{js,ts,tsx,css}\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@ui-components-library/react": "file:../../ui-components-library/packages/react",
+    "@ui-components-library/shared": "file:../../ui-components-library/packages/shared",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
+  "devDependencies": {
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  }
+}

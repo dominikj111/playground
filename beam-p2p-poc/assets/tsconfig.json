@@ -1,0 +1,36 @@
+// Unified TypeScript configuration for Phoenix assets
+// Supports both LiveView JavaScript and React+TypeScript
+{
+  "compilerOptions": {
+    // Target and lib for modern browsers and React
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+
+    // Module resolution
+    "moduleResolution": "node",
+    "baseUrl": ".",
+
+    // Phoenix LiveView deps path alias
+    // Note: When using package.json, you can add phoenix deps there instead
+    "paths": {
+      "*": ["../deps/*"]
+    },
+
+    // React support
+    "jsx": "react-jsx",
+
+    // Type checking
+    "strict": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+
+    // Module interop
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    // Output (esbuild handles actual compilation)
+    "noEmit": true
+  },
+  "include": ["js/**/*", "mainapp/**/*", "adminapp/**/*"]
+}

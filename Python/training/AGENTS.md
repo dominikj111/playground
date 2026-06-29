@@ -1,4 +1,4 @@
-# AGENTS.md
+# Chat Sessions Initial Document
 
 ## Purpose
 
@@ -23,7 +23,7 @@ Never violate these constraints:
 
 Repository documentation starts from these files only:
 
-* `AGENTS.md` — agent rules and project constraints.
+* `AGENTS.md` and `CLAUDE.md` — identical documents, agent rules and project constraints.
 * `Problems.md` — master roadmap of interview practice problems.
 * `environment.yml` — Conda environment definition.
 * `README.md` — human-facing project overview, if present.
@@ -43,9 +43,11 @@ Expected structure:
 ```text
 python-training/
 ├── AGENTS.md
+├── CLAUDE.md
 ├── Problems.md
 ├── environment.yml
 ├── README.md
+├── problem_seed/
 ├── shared/
 │   ├── pyutils/
 │   │   ├── __init__.py
@@ -85,34 +87,6 @@ Each exercise should contain, when useful:
 * interview notes
 
 Keep early exercises lightweight. Add more structure as problems become more realistic.
-
-## Agent Workflow
-
-Context loading order:
-
-1. The user request.
-2. Relevant entry in `Problems.md`.
-3. Relevant exercise `README.md`, if it exists.
-4. `AGENTS.md`.
-5. Relevant source code or tests.
-6. Explicitly referenced documentation.
-
-Do not load additional context unless required.
-
-Documentation is reference material, not startup context. Read only the documentation required for the active task.
-
-Implementation work should originate from one of:
-
-* a user request,
-* a `Problems.md` entry,
-* an exercise `README.md`,
-* a task note explicitly created for the current work.
-
-When conflicts occur:
-
-```text
-user request > exercise README/task note > Problems.md > AGENTS.md > assumptions
-```
 
 ## Python Environment
 
@@ -158,7 +132,7 @@ Follow these defaults unless an exercise says otherwise:
 
 Never:
 
-* rewrite `AGENTS.md` unless requested,
+* rewrite/update chat initial documents as `AGENTS.md` or `CLAUDE.md` unless requested,
 * create new documentation hierarchies without need,
 * duplicate exercise requirements across multiple files,
 * expand startup context,
@@ -169,4 +143,7 @@ Never:
 
 ---
 
-User additions below this line.
+Whenever you are asked to initialise new target (problem exercise):
+- initialise by `just new-problem <name>`
+- update newly created problem in problems directory with problem description
+- add just test commands targeting the new problem `test-xxx` and `run-xxx`

@@ -1,0 +1,19 @@
+[tool.pytest.ini_options]
+pythonpath = ["shared"]
+testpaths = ["shared/tests", "problems"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.black]
+line-length = 88
+target-version = ["py313"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+mypy_path = "shared"

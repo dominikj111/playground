@@ -1,0 +1,8 @@
+[project]
+name = "pyutils"
+version = "0.1.0"
+description = "Small shared utilities for Python interview training exercises."
+requires-python = ">=3.13"
+
+[tool.setuptools]
+packages = ["pyutils"]

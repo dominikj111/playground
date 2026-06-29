@@ -1,0 +1,53 @@
+name: python-playground
+
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  # Runtime
+  - python=3.13
+  - pip
+
+  # Interactive development
+  - ipython
+  - ipykernel
+
+  # Testing
+  - pytest
+  - pytest-cov
+  - pytest-asyncio
+
+  # Quality gates
+  - mypy
+  - ruff
+  - black
+
+  # CLI and terminal UX
+  - rich
+  - typer
+  - click
+
+  # HTTP and APIs
+  - requests
+  - httpx
+
+  # Data validation and configuration
+  - pydantic
+
+  # Persistence
+  - sqlalchemy
+  - aiosqlite
+
+  # Web development
+  - fastapi
+  - uvicorn
+  - jinja2
+
+  # Data manipulation
+  - pandas
+  - numpy
+
+  # PyPI-only or more practical through pip
+  - pip:
+      - types-requests

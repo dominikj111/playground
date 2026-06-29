@@ -1,0 +1,32 @@
+default:
+    just --list
+
+test:
+    conda run -n python-playground pytest
+
+test-001:
+    conda run -n python-playground pytest problems/001_hello_world
+
+lint:
+    conda run -n python-playground ruff check .
+
+format:
+    conda run -n python-playground black .
+    conda run -n python-playground ruff check . --fix
+
+typecheck:
+    conda run -n python-playground mypy shared problems
+
+check:
+    just lint
+    just typecheck
+    just test
+
+env-create:
+    conda env create -f environment.yml
+
+env-update:
+    conda env update -f environment.yml --prune
+
+run-001:
+    conda run -n python-playground python problems/001_hello_world/solution.py

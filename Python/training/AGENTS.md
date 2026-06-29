@@ -144,6 +144,9 @@ Never:
 ---
 
 Whenever you are asked to initialise new target (problem exercise):
-- initialise by `just new-problem <name>`
-- update newly created problem in problems directory with problem description
-- add just test commands targeting the new problem `test-xxx` and `run-xxx`
+- initialise by `just new-problem <number_name>` using the numbered exercise name from `Problems.md`, for example `002_temperature_converter`
+- update the newly created problem's `solution.py` top-level comment/docstring with the problem description, requirements, examples, constraints or edge cases, implementation task, and interview focus
+- do not implement the solution for the user; leave the exercise implementation as placeholders or minimal stubs for the user to complete
+- add only small, simple baseline unit tests that define the expected public API and basic behavior; avoid exhaustive tests that effectively solve the whole exercise
+- add just commands targeting the new problem: `test-xxx` and `run-xxx`
+- keep the exercise self-contained and lightweight unless the user explicitly asks for a fuller implementation or documentation

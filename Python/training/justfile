@@ -4,6 +4,11 @@ default:
 test:
     conda run -n python-playground pytest
 
+new-problem name:
+    test ! -e "problems/{{name}}"
+    cp -R problem_seed "problems/{{name}}"
+    echo "Created problems/{{name}} from problem_seed"
+
 test-001:
     conda run -n python-playground pytest problems/001_hello_world
 

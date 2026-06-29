@@ -150,3 +150,19 @@ Whenever you are asked to initialise new target (problem exercise):
 - add only small, simple baseline unit tests that define the expected public API and basic behavior; avoid exhaustive tests that effectively solve the whole exercise
 - add just commands targeting the new problem: `test-xxx` and `run-xxx`
 - keep the exercise self-contained and lightweight unless the user explicitly asks for a fuller implementation or documentation
+
+When the user says a problem directory was already created with `just new-problem <number_name>`:
+- do not run `just new-problem` again; treat the task as seed-file refinement only
+- do not scan the repository to discover the problem files
+- assume the standard seed paths exist:
+  - `problems/<number_name>/solution.py`
+  - `problems/<number_name>/tests/test_solution.py`
+- read only those target files, plus the smallest necessary `Problems.md` context if the problem title or focus is needed
+- if adding just commands, read only the root `justfile`
+- do not inspect unrelated problem directories unless the user asks to follow an existing example
+- keep generated tests intentionally small:
+  - one API existence or import test
+  - one basic successful behavior test
+  - optionally one simple invalid-input test
+- leave implementation placeholders in place unless the user explicitly asks for the solution
+- baseline tests for unsolved exercises may fail until the user implements the solution; this is acceptable when failures point at the intended placeholder or missing behavior

@@ -35,3 +35,9 @@ env-update:
 
 run-001:
     conda run -n python-playground python problems/001_hello_world/solution.py
+
+test-002:
+    conda run -n python-playground pytest problems/002_temperature_converter
+
+run-002:
+    conda run -n python-playground python problems/002_temperature_converter/solution.py
